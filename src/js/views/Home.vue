@@ -58,6 +58,7 @@
     import QrModal from 'js/components/QrModal';
     import ScanQrModal from 'js/components/ScanQrModal';
     import Identity from "../lib/Identity";
+    import Relay from "../lib/Relay";
 
     export default {
         mainAccount: null,
@@ -92,12 +93,19 @@
                     return;
                 }
                 const identityRepository = new IdentityRepository();
+                const username = this.username + this.domain;
                 const identityAddress = await
-                    new ENS().getIdentityAddressByUsername(this.username + this.domain);
+                    new ENS().getIdentityAddressByUsername(username);
                 const wallet = identityRepository.generateNewWallet();
-                this.qrIdentity = new Identity(this.username, identityAddress, wallet.privateKey, wallet.address);
-                if (this.$refs.qrModal) {
-                    this.$refs.qrModal.show();
+                if (identityAddress) {
+                    //login
+                    this.qrIdentity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
+                    if (this.$refs.qrModal) {
+                        this.$refs.qrModal.show();
+                    }
+                } else {
+                    //deploy
+                    (new Relay()).deploy(username, wallet.address)
                 }
             },
             handlePublicKeyAdded() {

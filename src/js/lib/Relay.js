@@ -1,6 +1,9 @@
 import RelayRequest from './RelayRequest';
+import axios from 'axios';
 
 export default class Relay {
+    static RELAY_HOST = 'http://localhost:3000';
+
     login(identityAddress, newPublicKey) {
         return new Promise(async (resolve, reject) => {
             //1. generate transaction
@@ -13,13 +16,8 @@ export default class Relay {
 
     deploy(username, newPublicKey) {
         return new Promise(async (resolve, reject) => {
-            //fetch('/deploy')
-            //Store in local storage:
-            //1. our new private key
-            //2. smart contract address
-            //3. ens username
-            const res = await RelayRequest.fetch(RelayRequest.DEPLOY_ENDPOINT);
-            resolve();
+            const res = await axios.post(Relay.RELAY_HOST + '/deploy', {username, address: newPublicKey});
+            resolve(res);
         });
     }
 }
