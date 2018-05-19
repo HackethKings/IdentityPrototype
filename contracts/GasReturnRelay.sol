@@ -26,6 +26,9 @@ contract GasReturnRelay {
         //TODO
     }
 
+
+    event GasLeft(uint gasLeft);
+
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`
      *         allows identity of being controlled without requiring ether in key balace
@@ -45,8 +48,10 @@ contract GasReturnRelay {
     external
     {
         uint startGas = gasleft();
+        emit GasLeft(startGas);
         //verify transaction parameters
-        require(startGas >= _gasLimit);
+
+        //require(startGas >= _gasLimit);
 
 
         //executes transaction
