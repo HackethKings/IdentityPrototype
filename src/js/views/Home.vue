@@ -42,7 +42,7 @@
              * TODO(@partyka): get identity contract address from ENS
              * TODO(@pawel): generate private key
              */
-             let web3 = new Web3(web3.currentProvider);
+             let web3 = new Web3(window.web3.currentProvider);
              let newAccount = web3.eth.accounts.create();
              web3.eth.accounts.wallet.add(newAccount.privateKey);
              this.$store.commit('setAccountKey', newAccount.privateKey);
