@@ -28,8 +28,7 @@
                         :username="qrIdentity.username"
                         :address="qrIdentity.address"
                         v-if="qrIdentity" @cancel="handleCancel"
-                        ref="qrModal"
-                        @ok="handlePublicKeyAdded"></QrModal>
+                        ref="qrModal"></QrModal>
                 <ScanQrModal
                         v-if="allowScanQrModal"
                         ref="scanQrModal"></ScanQrModal>
@@ -94,7 +93,7 @@
                 const identityAddress = await
                     new ENS().getIdentityAddressByUsername(username);
                 const wallet = identityRepository.generateNewWallet();
-                if (identityAddress) {
+                if (identityAddress && identityAddress !== "0x0000000000000000000000000000000000000000") {
                     //login
                     this.qrIdentity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
                     if (this.$refs.qrModal) {
@@ -105,15 +104,8 @@
                     (new Relay()).deploy(username, wallet.address)
                 }
             },
-            handlePublicKeyAdded() {
-                const identityRepository = new IdentityRepository();
-                //successful login
-                identityRepository.setActiveIdentity(this.qrIdentity.username, this.qrIdentity.identityAddress, this.qrIdentity.privateKey);
-                //TODO: move this to identity repository
-                this.setIdentity(this.qrIdentity);
-                // console.log("success");
-                this.qrIdentity = null;
-            },
+            // async handlePublicKeyAdded() {
+            // },
             handleCancel() {
                 alert('Fail adding new key to identity');
                 this.qrIdentity = null;
