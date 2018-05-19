@@ -1,56 +1,53 @@
 <template>
-    <div class="row" style="margin-top: 100px;">
-        <div class="col-sm">
-            <h1>Go Blockchain.<br/>Go Free.</h1>
-            <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
-                <div id="deploy" class="animated jello">
-                    <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
-                        <h3>Login to get free</h3>
-                        <div class="input-group">
-                            <input type="text" v-model="username" id="name" ref="shake" class="form-control"
-                                   placeholder="username"/>
-                            <div class="input-group-append">
-                                <select v-model="domain" class="custom-select">
-                                    <option value=".eth">.eth</option>
-                                    <option value=".hack.eth">.hack.eth</option>
+    <div>
 
-                                </select>
+        <div class="row" style="margin-top: 100px;">
+            <div class="col-sm">
+                <h1>Go Blockchain.<br/>Go Free.</h1>
+                <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
+                    <div id="deploy" class="animated jello">
+                        <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
+                            <h3>Login to get free</h3>
+                            <div class="input-group">
+                                <input type="text" v-model="username" id="name" ref="shake" class="form-control"
+                                       placeholder="username"/>
+                                <div class="input-group-append">
+                                    <select v-model="domain" class="custom-select">
+                                        <option value=".eth">.eth</option>
+                                        <option value=".hack.eth">.hack.eth</option>
+
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <br/>
-                        <button type="submit" class="btn btn-secondary">Log in</button>
-                    </form>
-                    <div v-else style="margin-top: 50px;">
-                        <i>Another shitcoin is on the rise. Pay without using metamask to stop it.</i><br/>
-                        <button @click="stopBitcoin">Stop <span style="
+                            <br/>
+                            <button type="submit" class="btn btn-secondary">Log in</button>
+                        </form>
+                        <div v-else style="margin-top: 50px;">
+                            <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> normal crypto investor. <br/><span style="text-decoration: underline;">Current state of crypto:</span> Another shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
+                            <button @click="stopBitcoin" class="btn btn-secondary">Stop <span style="
     text-decoration: line-through;">Bitcoin</span> Shitcoin
-                        </button>
+                            </button>
+                        </div>
                     </div>
+                    <QrModal
+                            :username="qrIdentity.username"
+                            :address="qrIdentity.address"
+                            v-if="qrIdentity" @cancel="handleCancel"
+                            ref="qrModal"></QrModal>
+                    <ScanQrModal
+                            v-if="allowScanQrModal"
+                            ref="scanQrModal"></ScanQrModal>
                 </div>
-                <QrModal
-                        :username="qrIdentity.username"
-                        :address="qrIdentity.address"
-                        v-if="qrIdentity" @cancel="handleCancel"
-                        ref="qrModal"></QrModal>
-                <ScanQrModal
-                        v-if="allowScanQrModal"
-                        ref="scanQrModal"></ScanQrModal>
             </div>
-        </div>
-        <div class="col-sm">
-            <div>
-                <img :src="gif" alt="" style="max-width: 100%;"><br/>
-                <div style="font-size: 0.8em;opacity: .4;">© https://dribbble.com/mikepiechota</div>
+            <div class="col-sm">
+                <div>
+                    <img :src="gif" alt="" style="max-width: 100%;"><br/>
+                    <div style="font-size: 0.8em;opacity: .4;">© https://dribbble.com/mikepiechota</div>
+                </div>
             </div>
         </div>
         <ul class="cm-footer__list cm-footer__list--images" style="margin-top: 100px;">
-            <li>
-                <a href="https://www.netguru.co/blog/netguru-deloitte-fast-50" class="cm-footer__menu-link">
-                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_deloitte.png?t=1526654198212"
-                         alt="Deloitte" class="cm-footer__menu-image">
-                </a>
-            </li>
-            <li>
+            <li style="margin-right: 50px;">
                 <a class="cm-footer__menu-link">
                     <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_forbes.png?t=1526654198212"
                          alt="Forbes" class="cm-footer__menu-image cm-footer__menu-image--forbes">
@@ -69,6 +66,7 @@
 <script>
     import gif from '../../welcome.gif';
     import Vue from 'vue';
+    import web3 from '../lib/web3';
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
     import {mapState, mapMutations} from 'vuex';
@@ -125,10 +123,16 @@
                     //event NewKeyAdded
                     const contract = require('truffle-contract');
                     const _GasReturnRelay = require('GasReturnRelay.json');
-                    contract(_GasReturnRelay).at(identityAddress)
-                        .then((contract) => contract.NewKeyAdded().watch((err, response) => {
-                            console.log(response);
-                        }));
+                    let deployed = contract(_GasReturnRelay);
+                    deployed.setProvider(web3.getWeb3().currentProvider);
+                    deployed = await deployed.at(identityAddress);
+                    console.log(deployed);
+                    deployed.NewKeyAdded().watch((err, response) => {
+                        this.$refs.qrModal.hide();
+                        const identity = this.qrIdentity;
+                        new IdentityRepository().setActiveIdentity(username, identityAddress, wallet.privateKey);
+                        this.setIdentity(identity);
+                    })
                 } else {
                     //deploy
                     const identityAddress = await (new Relay()).deploy(username, wallet.address);

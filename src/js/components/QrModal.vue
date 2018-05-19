@@ -15,6 +15,9 @@
         methods: {
             show() {
                 this.$refs.myModalRef.show();
+            },
+            hide() {
+                this.$refs.myModalRef.hide();
             }
         },
         mounted() {

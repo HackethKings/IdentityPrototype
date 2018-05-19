@@ -2,11 +2,12 @@
     <div class="row">
         <div class="col-sm" style="text-align: center;">
             <img :src="logo" alt="" style="height: 25vh;display: inline-block;margin: 0 auto;"
+                 ref="logo"
                  class="animated rubberBand">
-            <h1>ANOTHER SHITCOIN ON THE RISE</h1>
-            <h5>so much innovation. wow.</h5>
-            <h5>nobody can stop it wow.</h5>
-            <h1 style="margin-top: 20px;font-size: 90px;">${{price}}</h1>
+            <h1>{{title}}</h1>
+            <h2>{{subtitle}}</h2>
+            <h2>nobody can stop it wow.</h2>
+            <h1 style="margin-top: 20px;font-size: 90px;" v-if="price>0">${{price}}</h1>
             <h2 v-if="lastStopper">Last stopper:{{lastStopper}}</h2>
         </div>
     </div>
@@ -14,6 +15,7 @@
 
 <script>
     import logo from '../../Bitcoin.svg.png';
+    import jp2 from '../../janpawel.jpg';
     import Vue from 'vue';
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
@@ -26,8 +28,11 @@
         user: {},
         data: function () {
             return {
+                hasAdded: false,
                 logo,
-                price: '-9870',
+                title: "ANOTHER SHITCOIN ON THE RISE",
+                subtitle: "so much innovation. wow.",
+                price: '0',
                 lastStopper: null
             }
         },
@@ -46,6 +51,23 @@
                 setInterval(async () => {
                     const p = await c.getCalculation.call();
                     this.price = p.toNumber().toString();
+                    if (this.price == 0) {
+                        this.logo = jp2;
+                        // this.title = "POLAND SAVES WORLD AGAIN";
+                        this.title = "THANK YOU POLAND";
+                        this.subtitle = "i can buy legit ICOs again wow.";
+                        const c = "rubberBand";
+                        if (!this.hasAdded) {
+
+                            this.$refs.logo.classList.remove('animated');
+                            this.$refs.logo.classList.remove(c);
+                            this.$refs.logo.offsetHeight;
+                            this.$refs.logo.classList.add('animated');
+                            this.$refs.logo.classList.add(c);
+                            this.$refs.logo.offsetHeight;
+                        }
+                        this.hasAdded = true;
+                    }
                 }, 500);
 
                 c.PriceClicked().watch((err, response) => {

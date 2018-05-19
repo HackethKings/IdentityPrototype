@@ -32,6 +32,13 @@ body {
   }
 }
 
+.navbar__item {
+  &, span {
+
+    font-size: 1em;
+  }
+}
+
 .modal-title {
   color: map_get($theme-colors, 'primary');
 }
