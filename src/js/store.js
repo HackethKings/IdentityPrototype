@@ -41,6 +41,10 @@ export default new Vuex.Store({
         },
         setIsLoading(state, is) {
             state.isLoading = is;
+        },
+        setAccountKey(state, key) {
+            state.accountKey = key;
+            window.localStorage.setItem('accountKey', key);
         }
     },
     actions: {

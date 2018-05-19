@@ -21,6 +21,7 @@
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
     import {mapState} from 'vuex';
+    import Web3 from 'web3'
 
     export default {
         mainAccount: null,
@@ -40,6 +41,11 @@
             /**
              * TODO(@partyka): get identity contract address from ENS
              * TODO(@pawel): generate private key
+             */
+             let web3 = new Web3(web3.currentProvider);
+             let newAccount = web3.eth.accounts.create();
+             this.$store.commit('setAccountKey', newAccount.privateKey);
+             /*
              * TODO: show qr code which will add our new key to identity contract
              * TODO: perform challengemsg test from common.js
              */
