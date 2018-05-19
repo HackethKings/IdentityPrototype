@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c5ed1f6-b308-4a50-ba6b-e4f4d324ac30" name="Default" comment="why not blockchain">
+    <list default="true" id="7c5ed1f6-b308-4a50-ba6b-e4f4d324ac30" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/js/views/Home.vue" afterPath="$PROJECT_DIR$/src/js/views/Home.vue" />
     </list>
@@ -17,8 +17,8 @@
       <file leaf-file-name="Home.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/views/Home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="102" column="28" lean-forward="true" selection-start-line="102" selection-start-column="28" selection-end-line="102" selection-end-column="28" />
+            <state relative-caret-position="344">
+              <caret line="97" column="86" lean-forward="true" selection-start-line="97" selection-start-column="86" selection-end-line="97" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -395,7 +395,7 @@
       <updated>1526725976165</updated>
       <workItem from="1526725977615" duration="4094000" />
       <workItem from="1526732127761" duration="14043000" />
-      <workItem from="1526749882423" duration="8356000" />
+      <workItem from="1526749882423" duration="8497000" />
     </task>
     <task id="LOCAL-00001" summary="basic form">
       <created>1526733373754</created>
@@ -572,11 +572,18 @@
       <option name="project" value="LOCAL" />
       <updated>1526757930144</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="myk„">
+      <created>1526761567588</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1526761567588</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26493000" />
+    <option name="totallyTimeSpent" value="26634000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="952" extended-state="6" />
@@ -636,7 +643,8 @@
     <MESSAGE value="test addnew key" />
     <MESSAGE value="cors" />
     <MESSAGE value="why not blockchain" />
-    <option name="LAST_COMMIT_MESSAGE" value="why not blockchain" />
+    <MESSAGE value="myk„" />
+    <option name="LAST_COMMIT_MESSAGE" value="myk„" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1043,8 +1051,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/views/Home.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="102" column="28" lean-forward="true" selection-start-line="102" selection-start-column="28" selection-end-line="102" selection-end-column="28" />
+        <state relative-caret-position="344">
+          <caret line="97" column="86" lean-forward="true" selection-start-line="97" selection-start-column="86" selection-end-line="97" selection-end-column="86" />
           <folding />
         </state>
       </provider>

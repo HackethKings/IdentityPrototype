@@ -21,7 +21,9 @@
                         <button type="submit" class="btn btn-secondary">Log in</button>
                     </form>
                     <div v-else>
-                        Great! You are logged in as {{identity.username}}
+                       <h3>Supported Blockchain Apps</h3>
+                        - Stop Bitcoin
+                        <button>Stop it</button>
                     </div>
                 </div>
                 <QrModal
@@ -102,7 +104,7 @@
                 } else {
                     //deploy
                     // const identityAddress = await (new Relay()).deploy(username, wallet.address);
-                    const identityAddress = '';// await (new Relay()).deploy(username, wallet.address);
+                    const identityAddress = '0x12312321312391239129';// await (new Relay()).deploy(username, wallet.address);
                     const identity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
                     new IdentityRepository().setActiveIdentity(username, identityAddress, wallet.privateKey);
                     this.setIdentity(identity);
