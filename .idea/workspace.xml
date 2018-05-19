@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7c5ed1f6-b308-4a50-ba6b-e4f4d324ac30" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/js/lib/Identity.js" afterPath="$PROJECT_DIR$/src/js/lib/Identity.js" />
+      <change beforePath="$PROJECT_DIR$/src/js/components/QrModal.vue" afterPath="$PROJECT_DIR$/src/js/components/QrModal.vue" />
+      <change beforePath="$PROJECT_DIR$/src/js/views/Home.vue" afterPath="$PROJECT_DIR$/src/js/views/Home.vue" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,9 +18,11 @@
       <file leaf-file-name="Home.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/views/Home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="555">
+              <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+              <folding>
+                <element signature="n#style#0;n#button#0;n#form#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,10 +90,10 @@
         <option value="$PROJECT_DIR$/src/sass/app.scss" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/yarn.lock" />
-        <option value="$PROJECT_DIR$/src/js/components/QrModal.vue" />
         <option value="$PROJECT_DIR$/src/js/lib/repositories/IdentityRepository.js" />
-        <option value="$PROJECT_DIR$/src/js/views/Home.vue" />
         <option value="$PROJECT_DIR$/src/js/lib/Identity.js" />
+        <option value="$PROJECT_DIR$/src/js/components/QrModal.vue" />
+        <option value="$PROJECT_DIR$/src/js/views/Home.vue" />
       </list>
     </option>
   </component>
@@ -266,7 +269,7 @@
       <option name="presentableId" value="Default" />
       <updated>1526725976165</updated>
       <workItem from="1526725977615" duration="4094000" />
-      <workItem from="1526732127761" duration="7132000" />
+      <workItem from="1526732127761" duration="7633000" />
     </task>
     <task id="LOCAL-00001" summary="basic form">
       <created>1526733373754</created>
@@ -324,11 +327,18 @@
       <option name="project" value="LOCAL" />
       <updated>1526741732346</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="address">
+      <created>1526741922187</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1526741922187</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11226000" />
+    <option name="totallyTimeSpent" value="11727000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="952" extended-state="6" />
@@ -371,7 +381,8 @@
     <MESSAGE value="ens init" />
     <MESSAGE value="package web3@0.2" />
     <MESSAGE value="qr modal" />
-    <option name="LAST_COMMIT_MESSAGE" value="qr modal" />
+    <MESSAGE value="address" />
+    <option name="LAST_COMMIT_MESSAGE" value="address" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -704,14 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/QrModal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="28" lean-forward="false" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/lib/repositories/IdentityRepository.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -728,11 +731,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/QrModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/views/Home.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="555">
+          <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#form#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
