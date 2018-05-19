@@ -26,10 +26,14 @@ body {
     * {
       font-family: 'Comic Sans MS';
     }
-    .navbar{
+    .navbar {
       display: none !important;
     }
   }
+}
+
+.modal-title {
+  color: map_get($theme-colors, 'primary');
 }
 
 .f-l {

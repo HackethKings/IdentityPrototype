@@ -1,11 +1,13 @@
 <template>
     <div class="row">
         <div class="col-sm" style="text-align: center;">
-            <img :src="logo" alt="" style="height: 25vh;display: inline-block;margin: 0 auto;" class="animated rubberBand">
+            <img :src="logo" alt="" style="height: 25vh;display: inline-block;margin: 0 auto;"
+                 class="animated rubberBand">
             <h1>ANOTHER SHITCOIN ON THE RISE</h1>
             <h5>so much innovation. wow.</h5>
             <h5>nobody can stop it wow.</h5>
             <h1 style="margin-top: 20px;font-size: 90px;">${{price}}</h1>
+            <h2 v-if="lastStopper">Last stopper:{{lastStopper}}</h2>
         </div>
     </div>
 </template>
@@ -25,7 +27,8 @@
         data: function () {
             return {
                 logo,
-                price: '-9870'
+                price: '-9870',
+                lastStopper: null
             }
         },
         computed: {
@@ -44,6 +47,11 @@
                     const p = await c.getCalculation.call();
                     this.price = p.toNumber().toString();
                 }, 500);
+
+                c.PriceClicked().watch((err, response) => {
+                    console.log(response);
+                    this.lastStopper = response.address;
+                });
             }, 50);
         }
     }
