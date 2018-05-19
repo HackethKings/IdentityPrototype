@@ -104,6 +104,7 @@
     "vue": "^2.5.10",
     "vue-axios": "^2.0.2",
     "vue-blockui": "^1.1.6",
+    "vue-body-class": "^2.0.0-beta.2",
     "vue-class-component": "^6.2.0",
     "vue-form-generator": "^2.2.0",
     "vue-loader": "^13.5.0",

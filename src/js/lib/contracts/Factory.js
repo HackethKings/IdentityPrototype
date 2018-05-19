@@ -7,6 +7,7 @@ const contract = require('truffle-contract');
 const _GasReturnRelay = require('GasReturnRelay.json');
 const _TimeConstrainedCounter = require('TimeConstrainedCounter.json');
 const _FlipContract = require('FlipContract.json');
+const _BitcoinPriceStoppper = require('BitcoinPriceStoppper.json');
 const _ENS = require('ENS.json');
 let _objs = {}, _users = null;
 const Factory = {
@@ -39,6 +40,16 @@ const Factory = {
         _objs.GasReturnRelay = this.get('GasReturnRelay');
         _objs.GasReturnRelay = await _objs.GasReturnRelay;
         return _objs.GasReturnRelay;
+    },
+    async BitcoinPriceStoppper() {
+        if (_objs.BitcoinPriceStoppper instanceof Promise) {
+            return await _objs.BitcoinPriceStoppper;
+        } else if (_objs.BitcoinPriceStoppper) {
+            return _objs.BitcoinPriceStoppper;
+        }
+        _objs.BitcoinPriceStoppper = this.get('FlipContract');
+        _objs.BitcoinPriceStoppper = await _objs.BitcoinPriceStoppper;
+        return _objs.BitcoinPriceStoppper;
     },
     async ENS() {
         if (_objs.ENS instanceof Promise) {
@@ -88,6 +99,12 @@ const Factory = {
                 break;
             case 'ENS':
                 obj = contract(_ENS);
+                break;
+            case 'BitcoinPriceStoppper':
+                obj = contract(_BitcoinPriceStoppper);
+                break;
+            case 'GasReturnRelay':
+                obj = contract(_GasReturnRelay);
                 break;
         }
 
