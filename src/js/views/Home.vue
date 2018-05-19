@@ -23,6 +23,10 @@
                     <div v-else>
                         Great! You are logged in as {{identity.username}}
                     </div>
+                    <div>
+                        <button class="btn btn-secondary" v-on:click="seen = !seen">Add key</button>
+                    </div>
+                    <qrcode-reader @decode="onDecode" v-show="seen"></qrcode-reader>
                 </div>
                 <QrModal
                         :username="qrIdentity.username"
@@ -51,6 +55,7 @@
     import ENS from "../lib/ENS";
     import QrModal from 'js/components/QrModal';
     import Identity from "../lib/Identity";
+    import { QrcodeReader } from 'vue-qrcode-reader'
 
     export default {
         mainAccount: null,
@@ -62,13 +67,14 @@
                 username: '',
                 domain: '.eth',
                 qrIdentity: null,
-                shake: false
+                shake: false,
+                seen: false
             }
         },
         computed: {
             ...mapState(['status', 'user', 'localKeys', 'identity'])
         },
-        components: {QrModal},
+        components: {QrModal, QrcodeReader},
         methods: {
             ...mapMutations(['setIdentity']),
 
@@ -104,7 +110,10 @@
             handleCancel() {
                 alert('Fail adding new key to identity');
                 this.qrIdentity = null;
-            }
+            },
+            onDecode (content) {
+                console.log(content);
+            },
         }
     }
 </script>
