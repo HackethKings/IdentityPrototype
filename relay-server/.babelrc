@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-decorators-legacy"
+  ],
+  "presets": [
+    "es2015",
+    "stage-0",
+    "stage-2"
+  ]
+}
