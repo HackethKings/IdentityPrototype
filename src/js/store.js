@@ -9,7 +9,8 @@ let state = {
     pendingTransactions: [],
     receipts: [],
     web3: null,
-    isLoading: false
+    isLoading: false,
+    localKeys: []
 };
 
 Vue.use(Vuex);
