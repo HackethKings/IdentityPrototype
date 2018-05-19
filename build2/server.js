@@ -2,6 +2,10 @@ const Web3 = require('web3');
 const contract = require('truffle-contract');
 const fs = require('fs');
 
+// import { advanceBlock } from 'openzeppelin-solidity/test/helpers/advanceToBlock';
+// import { increaseTimeTo, duration } from 'openzeppelin-solidity/test/helpers/increaseTime';
+// import latestTime from 'openzeppelin-solidity/test/helpers/latestTime';
+
 const fileContents = fs.readFileSync('../build/contracts/FlipContract.json', 'utf8');
 const flipContractArtifacts = JSON.parse(fileContents);
 const FlipContract = contract(flipContractArtifacts);
