@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.3-beta",
+    "animate.css": "^3.6.1",
     "axios": "^0.17.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
