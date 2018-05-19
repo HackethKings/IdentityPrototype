@@ -19,6 +19,14 @@ body {
   justify-content: center;
   color: map_get($theme-colors, 'secondary');
   font-family: 'Roboto', sans-serif;
+  &.btc-sucks {
+    background: red;
+
+    font-family: 'Comic Sans MS';
+    * {
+      font-family: 'Comic Sans MS';
+    }
+  }
 }
 
 .f-l {
@@ -56,7 +64,7 @@ h1 {
   align-items: center;
   justify-content: center;
   list-style-type: none;
-  img{
+  img {
     max-height: 30px;
   }
 }

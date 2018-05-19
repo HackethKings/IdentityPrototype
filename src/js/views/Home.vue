@@ -4,8 +4,8 @@
             <h1>Go Blockchain.<br/>Go Free.</h1>
             <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
                 <div id="deploy" class="animated jello">
-                    <h3>Login to get free</h3>
                     <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
+                        <h3>Login to get free</h3>
                         <div class="input-group">
                             <input type="text" v-model="username" id="name" ref="shake" class="form-control"
                                    placeholder="username"/>
@@ -20,10 +20,10 @@
                         <br/>
                         <button type="submit" class="btn btn-secondary">Log in</button>
                     </form>
-                    <div v-else>
-                       <h3>Supported Blockchain Apps</h3>
-                        - Stop Bitcoin
-                        <button>Stop it</button>
+                    <div v-else style="margin-top: 50px;">
+                        <i>Another shitcoin is on the rise. Pay without using metamask to stop it.</i><br/>
+                        <button>Stop <span style="
+    text-decoration: line-through;">Bitcoin</span> Shitcoin </button>
                     </div>
                 </div>
                 <QrModal
@@ -42,6 +42,26 @@
                 <div style="font-size: 0.8em;opacity: .4;">© https://dribbble.com/mikepiechota</div>
             </div>
         </div>
+        <ul class="cm-footer__list cm-footer__list--images" style="margin-top: 100px;">
+            <li>
+                <a href="https://www.netguru.co/blog/netguru-deloitte-fast-50" class="cm-footer__menu-link">
+                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_deloitte.png?t=1526654198212"
+                         alt="Deloitte" class="cm-footer__menu-image">
+                </a>
+            </li>
+            <li>
+                <a class="cm-footer__menu-link">
+                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_forbes.png?t=1526654198212"
+                         alt="Forbes" class="cm-footer__menu-image cm-footer__menu-image--forbes">
+                </a>
+            </li>
+            <li>
+                <a class="cm-footer__menu-link">
+                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_inc5000.png?t=1526654198212"
+                         alt="INC5000" class="cm-footer__menu-image cm-footer__menu-image--inc">
+                </a>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -95,7 +115,7 @@
                 const identityAddress = await
                     new ENS().getIdentityAddressByUsername(username);
                 const wallet = identityRepository.generateNewWallet();
-                if (identityAddress && identityAddress !== "0x0000000000000000000000000000000000000000") {
+                if (identityAddress && identityAddress !== "0x0000000000000000000000000000000000000000" && identityAddress !== "0x0") {
                     //login
                     this.qrIdentity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
                     if (this.$refs.qrModal) {
