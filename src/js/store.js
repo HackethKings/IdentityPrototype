@@ -9,7 +9,10 @@ let state = {
     pendingTransactions: [],
     receipts: [],
     web3: null,
-    isLoading: false
+    isLoading: false,
+    /** HACKETH **/
+    identity: null
+
 };
 
 Vue.use(Vuex);
@@ -37,6 +40,13 @@ export default new Vuex.Store({
         },
         setIsLoading(state, is) {
             state.isLoading = is;
+        },
+        setAccountKey(state, key) {
+            state.accountKey = key;
+            window.localStorage.setItem('accountKey', key);
+        },
+        setIdentity(state, identity) {
+            state.identity = identity;
         }
     },
     actions: {

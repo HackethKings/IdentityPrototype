@@ -1,5 +1,18 @@
 <template>
-    <div class="p-5 flex-row d-flex p-0 m-0 align-items-stretch">
+    <div class="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
+        <div id="deploy" class="animated jello">
+            <form action="" v-if="!accountKey" onsubmit="handleSubmit()">
+                <h2>Metamaskless login*</h2>
+                <label for="name">name:</label>
+                <input type="text" v-model="username" id="name"/>
+                <select v-model="domain">
+                    <option value=".eth">.eth</option>
+                    <option value=".hack.eth">.hack.eth</option>
+
+                </select><br/>
+                <button style="font-size: 100px;background-color: #f00;" type="submit">LOGIN</button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -8,15 +21,36 @@
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
     import {mapState} from 'vuex';
+    import IdentityRepository from "../lib/repositories/IdentityRepository";
+    import ENS from "../lib/ENS";
 
     export default {
         mainAccount: null,
         address: null,
         user: {},
-        computed: {
-            ...mapState(['status', 'user'])
+        data: function () {
+            return {
+                username: '',
+                domain: '.eth'
+            }
         },
-        components: {
+        computed: {
+            ...mapState(['status', 'user', 'localKeys', 'accountKey'])
+        },
+        components: {},
+        async handleSubmit() {
+            /**
+             * TODO(@partyka): get identity contract address from ENS
+             * TODO(@pawel): generate private key
+             */
+            const identityRepository = new IdentityRepository();
+            const identityAddress = await new ENS().getIdentityAddressByUsername(this.username + this.domain);
+            const privateKey = identityRepository.generateNewPrivateKey();
+            identityAddress.storeIdentity(this.username, identityAddress, privateKey);
+            /*
+            * TODO: show qr code which will add our new key to identity contract
+            * TODO: perform challengemsg test from common.js
+            */
         }
     }
 </script>

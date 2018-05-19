@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.3-beta",
+    "animate.css": "^3.6.1",
     "axios": "^0.17.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -108,7 +109,7 @@
     "vue-router": "^3.0.1",
     "vue2-dropzone": "^3.0.5",
     "vuex": "^3.0.1",
-    "web3": "^0.20.0",
+    "web3": "^1.0.0-beta.34",
     "zeppelin-solidity": "^1.9.0"
   }
 }

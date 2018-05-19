@@ -2,4 +2,46 @@
 @import "variables";
 // Bootstrap
 @import '~bootstrap/scss/bootstrap.scss';
+@import '~animate.css';
 // Partials
+
+#deploy {
+  //animation: .5s linear shake infinite ;
+  -webkit-animation-iteration-count: infinite;
+}
+
+body {
+  background: linear-gradient(270deg, rgb(255, 0, 0), rgb(159, 0, 255)) 0% 0% / 200% 200%;
+  animation: CustomAnimation 1s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes CustomAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shake {
+  0% {
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+  }
+  50% {
+    transform: translate(500px, 0);
+  }
+  100% {
+    transform: translate(500px, 0);
+  }
+}

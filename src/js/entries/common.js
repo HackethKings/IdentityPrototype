@@ -4,6 +4,7 @@ import Vue from "vue";
 import Store from "js/store";
 import web3 from "lib/web3";
 import bus from 'js/bus';
+import IdentityRepository from "../lib/repositories/IdentityRepository";
 
 export default class Common {
     constructor(router, App) {
@@ -35,6 +36,8 @@ export default class Common {
                         }
                     }, 100);
                 }
+
+                this.$store.commit('setIdentity', (new IdentityRepository()).getIdentityFromLocalStorage());
             }
         });
     }
