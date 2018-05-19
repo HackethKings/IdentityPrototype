@@ -11,9 +11,12 @@
 <script>
     export default {
         props: ['address', 'username'],
-        methods: {},
+        methods: {
+            show() {
+                this.$refs.myModalRef.show();
+            }
+        },
         mounted() {
-
             this.$nextTick(() => {
                 this.$refs.myModalRef.show()
             })

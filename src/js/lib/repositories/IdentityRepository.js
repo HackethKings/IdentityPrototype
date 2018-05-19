@@ -1,6 +1,7 @@
 import Identity from 'js/lib/Identity';
 import test from 'ethereumjs-wallet';
 
+
 export default class IdentityRepository {
     static IDENTITY_ADDRESS = 'identity_address';
     static ENS_USERNAME = 'ens_username';
@@ -11,19 +12,21 @@ export default class IdentityRepository {
     }
 
     getIdentityFromLocalStorage() {
-        const identityAddress = this.ls.getItem(Identity.IDENTITY_ADDRESS),
-            username = this.ls.getItem(Identity.ENS_USERNAME),
-            privateKey = this.ls.getItem(Identity.PRIVATE_KEY);
+        const identityAddress = this.ls.getItem(IdentityRepository.IDENTITY_ADDRESS),
+            username = this.ls.getItem(IdentityRepository.ENS_USERNAME),
+            privateKey = this.ls.getItem(IdentityRepository.PRIVATE_KEY);
         if (identityAddress && username && privateKey && identityAddress.length && username.length && privateKey.length) {
             return new Identity(username, identityAddress, privateKey);
         }
         return null;
     }
 
-    storeIdentity(username, identityAddress, privateKey) {
+    setActiveIdentity(username, identityAddress, privateKey) {
         this.ls.setItem(IdentityRepository.IDENTITY_ADDRESS, identityAddress);
         this.ls.setItem(IdentityRepository.ENS_USERNAME, username);
         this.ls.setItem(IdentityRepository.PRIVATE_KEY, privateKey);
+
+
     }
 
     generateNewWallet() {

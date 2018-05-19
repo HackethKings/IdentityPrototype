@@ -4,7 +4,7 @@
             <slot name="navbar"></slot>
         </Navbar>
 
-        <div class="container-fluid p-0 site__body">
+        <div class="container site__body">
             <slot name="content">
                 <router-view></router-view>
             </slot>
