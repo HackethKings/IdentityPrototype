@@ -13,7 +13,7 @@ require("babel-register")({
     ],
     retainLines: true,
 });
-//require("babel-polyfill");
+require("babel-polyfill");
 
 module.exports = {
     networks: {
