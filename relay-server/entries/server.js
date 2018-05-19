@@ -133,7 +133,7 @@ app.post('/deploy', (req, res) => {
     processDeploy(req.body.username, req.body.address, res)
 })
 app.post('/key', (req, res) => {
-    processKey(req.body.identityAddress, req.body.publicKey, res)
+    processKey(req.body.identityAddress, req.body.newKey, res)
 })
 app.post('/exec', (req, res) => {
     processExec(req.body.relayAddress, req.body.to, req.body.value, Web3EthAbi.encodeFunctionSignature(req.body.data), req.body.gasPrice, req.body.gasLimit, res);
