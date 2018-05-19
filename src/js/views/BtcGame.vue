@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-sm" style="text-align: center;">
-            <img :src="logo" alt="" style="height: 25vh;display: inline-block;margin: 0 auto;">
+            <img :src="logo" alt="" style="height: 25vh;display: inline-block;margin: 0 auto;" class="animated rubberBand">
             <h1>ANOTHER SHITCOIN ON THE RISE</h1>
             <h5>so much innovation. wow.</h5>
             <h5>nobody can stop it wow.</h5>
@@ -36,9 +36,15 @@
             ...mapMutations([]),
         },
         async mounted() {
-            const c = await Factory.BitcoinPriceStoppper();
-            const p = await c.getCalculation.call();
-            this.price = p;
+            setTimeout(async () => {
+
+                const c = await Factory.BitcoinPriceStoppper();
+                console.log(c);
+                setInterval(async () => {
+                    const p = await c.getCalculation.call();
+                    this.price = p.toNumber().toString();
+                }, 500);
+            }, 50);
         }
     }
 </script>

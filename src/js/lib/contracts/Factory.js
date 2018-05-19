@@ -47,7 +47,7 @@ const Factory = {
         } else if (_objs.BitcoinPriceStoppper) {
             return _objs.BitcoinPriceStoppper;
         }
-        _objs.BitcoinPriceStoppper = this.get('FlipContract');
+        _objs.BitcoinPriceStoppper = this.get('BitcoinPriceStoppper');
         _objs.BitcoinPriceStoppper = await _objs.BitcoinPriceStoppper;
         return _objs.BitcoinPriceStoppper;
     },

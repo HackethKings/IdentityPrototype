@@ -7672,6 +7672,10 @@ openurl@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.1.tgz#3875b4b0ef7a52c156f0db41d4609dbb0f94b387"
 
+openzeppelin-solidity@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/openzeppelin-solidity/-/openzeppelin-solidity-1.9.0.tgz#929c2e8eab5d1935a048390a77645b36dfc5cfad"
+
 opn@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/opn/-/opn-4.0.2.tgz#7abc22e644dff63b0a96d5ab7f2790c0f01abc95"
@@ -10695,6 +10699,10 @@ truffle-hdwallet-provider@0.0.5:
     ethereumjs-wallet "^0.6.0"
     web3 "^0.18.2"
     web3-provider-engine "^14.0.5"
+
+truffle-test-helpers@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/truffle-test-helpers/-/truffle-test-helpers-0.0.5.tgz#24a0e9d8610c30833a8980064ab1989ab1496cb7"
 
 truffle@^4.1.8:
   version "4.1.8"

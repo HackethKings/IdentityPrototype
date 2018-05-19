@@ -22,6 +22,6 @@ contract BitcoinPriceStoppper {
 
     function getCalculation() public view returns (uint) {
 
-        return initialPrice + (now - createdAt) * 5 - clicks *100;
+        return initialPrice + (now - createdAt) * 60 - clicks * 1000;
     }
 }
