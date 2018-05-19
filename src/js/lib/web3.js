@@ -10,11 +10,11 @@ class MyWeb3 {
     }
 
     init() {
-        // if (typeof window == "undefined") {
-        ethereum_node = 'http://127.0.0.1:9545';
-        // } else {
-        //     ethereum_node = window.config.routes.ethereum_node;
-        // }
+        if (typeof window == "undefined") {
+            ethereum_node = 'http://localhost:8545';
+        } else {
+            ethereum_node = 'http://localhost:8545';
+        }
 // Checking if Web3 has been injected by the browser (Mist/MetaMask)
         if (0 && typeof window !== "undefined" && typeof window.web3 !== 'undefined') {
             console.warn("Using web3 detected from external source.")

@@ -8,8 +8,6 @@ module.exports = {
     modules: [
         'node_modules',
         path.join(__dirname, '../'),
-        path.join(__dirname, '../../assets/'),
-        path.join(__dirname, '../../assets/js/'),
-        path.join(__dirname, '../../truffle/build/contracts')
+        path.join(__dirname, '../../src/')
     ]
 };
