@@ -69,6 +69,8 @@
     "datatables.net": "^1.10.15",
     "datatables.net-bs": "^1.10.15",
     "datatables.net-dt": "^1.10.15",
+    "ethereumjs-abi": "^0.6.5",
+    "express": "^4.16.3",
     "fastify-sequelize": "^1.0.4",
     "fine-uploader": "^5.14.5",
     "font-awesome": "^4.7.0",
@@ -109,6 +111,8 @@
     "vue2-dropzone": "^3.0.5",
     "vuex": "^3.0.1",
     "web3": "^1.0.0-beta.34",
+    "web3-eth-abi": "^1.0.0-beta.34",
+    "web3-eth-accounts": "^1.0.0-beta.34",
     "zeppelin-solidity": "^1.9.0"
   }
 }
