@@ -13,7 +13,7 @@ const FlipContract = contract(flipContractArtifacts);
 var accounts;
 var account;
 
-const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
 FlipContract.setProvider(web3.currentProvider);
 if (typeof FlipContract.currentProvider.sendAsync !== "function") {
     FlipContract.currentProvider.sendAsync = function() {
@@ -43,26 +43,3 @@ async function getAccounts() {
 async function call(params) {
 }
 
-async function init() {
-    let accounts = await getAccounts()
-    account = accounts[0];
-    console.log(account)
-    instance = await FlipContract.deployed();    
-
-    let counterBefore = await instance.counter.call({from: account})
-    console.log('before: ', counterBefore.valueOf());
-
-    let flip = await instance.add.call({from: account})
-
-    
-
-    let counterAfter = await instance.counter.call({from: account})
-    console.log('after: ', counterAfter.valueOf());
-
-    let time = await instance.time.call({from: account})
-    console.log('time: ', time.valueOf());
-
-
-}
-
-init()

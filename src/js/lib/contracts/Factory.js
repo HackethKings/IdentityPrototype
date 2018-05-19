@@ -28,6 +28,28 @@ const Factory = {
         _objs.FlipContract = await _objs.FlipContract;
         return _objs.FlipContract;
     },
+    async deployNewContract(name, from) {
+
+        const contractDefaults = {
+            from: from,
+            gas: 4712388,
+            gasPrice: 10000000000
+        };
+        let obj = '';
+        switch (name) {
+            case 'TimeConstrainedCounter':
+                obj = contract(_TimeConstrainedCounter);
+                break;
+            case 'FlipContract':
+                obj = contract(_FlipContract);
+                break;
+        }
+
+        obj.setProvider(web3.getWeb3().currentProvider);
+        obj.defaults(contractDefaults);
+        const deployed = await obj.new();
+        return deployed;
+    },
     /**
      * Get contract instance
      * @param name
@@ -41,6 +63,7 @@ const Factory = {
                 break;
             case 'FlipContract':
                 obj = contract(_FlipContract);
+                console.log("XXXXX",)
                 break;
         }
 
@@ -64,7 +87,7 @@ const Factory = {
             // const isImplemented = await deployed.implementsERC721();
             // if (!isImplemented) {
             //     bus.$emit('contractInvalid');
-                // alert("Contract invalid, is not implementing ERC721");
+            // alert("Contract invalid, is not implementing ERC721");
             // }
             return deployed;
         });

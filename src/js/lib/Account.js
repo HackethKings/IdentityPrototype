@@ -5,7 +5,7 @@ const Account = {
         return new Promise((resolve, reject) => {
             web3.getWeb3().eth.getAccounts((err, accs) => {
                 if (err != null) {
-                    alert("There was an error fetching your accounts.");
+                    console.log("There was an error fetching your accounts.");
                     return;
                 }
                 resolve(accs);

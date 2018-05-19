@@ -11,9 +11,9 @@ class MyWeb3 {
 
     init() {
         if (typeof window == "undefined") {
-            ethereum_node = 'http://localhost:8545';
+            ethereum_node = 'http://localhost:7545';
         } else {
-            ethereum_node = 'http://localhost:8545';
+            ethereum_node = 'http://localhost:7545';
         }
 // Checking if Web3 has been injected by the browser (Mist/MetaMask)
         if (0 && typeof window !== "undefined" && typeof window.web3 !== 'undefined') {
