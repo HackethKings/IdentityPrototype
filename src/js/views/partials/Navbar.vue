@@ -1,13 +1,12 @@
 <template>
     <div class="navbar d-flex w-100 fixed-top">
         <div class="navbar__logo">
-            <router-link v-html="'Home'" class=" navbar__item m-0 navbar__item--logo"
-                         :to="{ name: 'home' }"></router-link>
         </div>
         <div class="navbar__menu text-uppercase d-flex">
-            <div class="btn navbar__item m-0 h6 btn-flat" style="vertical-align: middle;" v-if="status">
+            <div class="btn navbar__item m-0 btn-flat" style="vertical-align: middle;" v-if="status">
                 <div class="status-dot va-m"></div>
-                <span class="va-m">connected</span>
+                <span class="va-m h6" v-if="identity">Hi, {{identity.username}}</span>
+                <span class="f-l" v-if="identity" @click="logout" style="opacity: .5;">logout</span>
             </div>
             <div class="btn navbar__item m-0 h6 btn-flat" style="vertical-align: middle;"
                  v-if="pendingTransactions.length">pending transactions: {{pendingTransactions.length}}
@@ -16,7 +15,7 @@
             <!--<router-link v-if="!$auth.check()" class="btn navbar__item m-0 h6 btn-flat" :to="{ name: 'login' }">Login-->
             <!--</router-link>-->
             <!--<div v-if="$auth.check()" class="btn navbar__item m-0 h6 btn-flat" :to="{ name: 'login' }" @click="logout">-->
-                <!--Logout-->
+            <!--Logout-->
             <!--</div>-->
         </div>
         <div class="user-info-wrap" style="display: none;">
@@ -31,7 +30,8 @@
     import Vue from 'vue';
     import Component from 'vue-class-component'
     // import logo from 'img/logo.svg';
-    import {mapState} from 'vuex';
+    import {mapState, mapMutations} from 'vuex';
+    import IdentityRepository from "../../lib/repositories/IdentityRepository";
 
 
     export default {
@@ -43,13 +43,16 @@
             }
         },
         computed: {
-            ...mapState(['user', 'mainAccount', 'pendingTransactions', 'status'])
+            ...mapState(['user', 'mainAccount', 'pendingTransactions', 'status', 'identity'])
         },
         mounted() {
             this.contract = window.contract;
         },
         methods: {
+            ...mapMutations(['setIdentity']),
             logout() {
+                new IdentityRepository().logout();
+                this.setIdentity(null);
                 // Vue.auth.logout({redirect: {name: 'home'}});
 
                 // this.$auth.logout({
