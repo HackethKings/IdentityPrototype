@@ -21,7 +21,8 @@
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
     import {mapState} from 'vuex';
-    import Web3 from 'web3'
+    import IdentityRepository from "../lib/repositories/IdentityRepository";
+    import ENS from "../lib/ENS";
 
     export default {
         mainAccount: null,
@@ -37,19 +38,19 @@
             ...mapState(['status', 'user', 'localKeys', 'accountKey'])
         },
         components: {},
-        handleSubmit() {
+        async handleSubmit() {
             /**
              * TODO(@partyka): get identity contract address from ENS
              * TODO(@pawel): generate private key
              */
-             let web3 = new Web3(window.web3.currentProvider);
-             let newAccount = web3.eth.accounts.create();
-             web3.eth.accounts.wallet.add(newAccount.privateKey);
-             this.$store.commit('setAccountKey', newAccount.privateKey);
-             /*
-             * TODO: show qr code which will add our new key to identity contract
-             * TODO: perform challengemsg test from common.js
-             */
+            const identityRepository = new IdentityRepository();
+            const identityAddress = await new ENS().getIdentityAddressByUsername(this.username + this.domain);
+            const privateKey = identityRepository.generateNewPrivateKey();
+            identityAddress.storeIdentity(this.username, identityAddress, privateKey);
+            /*
+            * TODO: show qr code which will add our new key to identity contract
+            * TODO: perform challengemsg test from common.js
+            */
         }
     }
 </script>
