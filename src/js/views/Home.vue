@@ -4,8 +4,8 @@
             <h1>Go Blockchain.<br/>Go Free.</h1>
             <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
                 <div id="deploy" class="animated jello">
+                    <h3>Login to get free</h3>
                     <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
-                        <label for="name">name:</label>
                         <div class="input-group">
                             <input type="text" v-model="username" id="name" ref="shake" class="form-control"
                                    placeholder="username"/>
@@ -101,7 +101,11 @@
                     }
                 } else {
                     //deploy
-                    (new Relay()).deploy(username, wallet.address)
+                    // const identityAddress = await (new Relay()).deploy(username, wallet.address);
+                    const identityAddress = '';// await (new Relay()).deploy(username, wallet.address);
+                    const identity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
+                    new IdentityRepository().setActiveIdentity(username, identityAddress, wallet.privateKey);
+                    this.setIdentity(identity);
                 }
             },
             // async handlePublicKeyAdded() {
