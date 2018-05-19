@@ -1,9 +1,11 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 
-contract GasReturnRelay  {
+
+contract GasReturnRelay {
     event ExecutedGasRelayed(bool success);
 
     address public owner;
+
     string public name;
 
     function setOwner(address newOwner) public {
@@ -14,8 +16,9 @@ contract GasReturnRelay  {
         name = newName;
     }
 
-    function () public payable {
+    function() public payable {
     }
+
 
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`
@@ -27,19 +30,19 @@ contract GasReturnRelay  {
      * @param _gasLimit minimal gasLimit required to execute this call
      */
     function callGasRelayed(
-        address _to,
-        uint256 _value,
-        bytes _data,
-        uint _gasPrice,
-        uint _gasLimit
-    ) 
-        external 
+    address _to,
+    uint256 _value,
+    bytes _data,
+    uint _gasPrice,
+    uint _gasLimit
+    )
+    external
     {
         uint startGas = gasleft();
         //verify transaction parameters
         require(startGas >= _gasLimit);
 
-        
+
         //executes transaction
         bool success = _to.call.value(_value)(_data);
         emit ExecutedGasRelayed(success);
@@ -49,6 +52,6 @@ contract GasReturnRelay  {
             uint256 _amount = 21000 + (startGas - gasleft());
             _amount = _amount * _gasPrice;
             address(msg.sender).transfer(_amount);
-        }        
+        }
     }
 }
