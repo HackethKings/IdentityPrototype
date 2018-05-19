@@ -22,8 +22,9 @@
                     </form>
                     <div v-else style="margin-top: 50px;">
                         <i>Another shitcoin is on the rise. Pay without using metamask to stop it.</i><br/>
-                        <button>Stop <span style="
-    text-decoration: line-through;">Bitcoin</span> Shitcoin </button>
+                        <button @click="stopBitcoin">Stop <span style="
+    text-decoration: line-through;">Bitcoin</span> Shitcoin
+                        </button>
                     </div>
                 </div>
                 <QrModal
@@ -125,13 +126,13 @@
                     const contract = require('truffle-contract');
                     const _GasReturnRelay = require('GasReturnRelay.json');
                     contract(_GasReturnRelay).at(identityAddress)
-                    .then((contract) => contract.NewKeyAdded().watch((err, response) => {
-                        console.log(response);
-                    }));
+                        .then((contract) => contract.NewKeyAdded().watch((err, response) => {
+                            console.log(response);
+                        }));
                 } else {
                     //deploy
-                    // const identityAddress = await (new Relay()).deploy(username, wallet.address);
-                    const identityAddress = '0x12312321312391239129';// await (new Relay()).deploy(username, wallet.address);
+                    const identityAddress = await (new Relay()).deploy(username, wallet.address);
+                    // const identityAddress = '0x12312321312391239129';// await (new Relay()).deploy(username, wallet.address);
                     const identity = new Identity(username, identityAddress, wallet.privateKey, wallet.address);
                     new IdentityRepository().setActiveIdentity(username, identityAddress, wallet.privateKey);
                     this.setIdentity(identity);
@@ -143,6 +144,17 @@
                 alert('Fail adding new key to identity');
                 this.qrIdentity = null;
             },
+            async stopBitcoin() {
+                const btc = await Factory.BitcoinPriceStoppper();
+                (new Relay()).exec({
+                    data: 'click()',
+                    to: btc.address,
+                    value: 0,
+                    gasPrice: 0,
+                    gasLimit: 100,
+                    relayAddress: this.identity.identityAddress
+                });
+            }
 
         }
     }

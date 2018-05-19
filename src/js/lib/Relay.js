@@ -38,7 +38,14 @@ export default class Relay {
     deploy(username, newPublicKey) {
         return new Promise(async (resolve, reject) => {
             const res = await axios.post(Relay.RELAY_HOST + '/deploy', {username, address: newPublicKey});
-            resolve(res);
+            resolve(res.data);
+        });
+    }
+
+    exec(params) {
+        return new Promise(async (resolve, reject) => {
+            const res = await axios.post(Relay.RELAY_HOST + '/exec', params);
+            resolve(res.data);
         });
     }
 }

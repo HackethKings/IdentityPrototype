@@ -5,9 +5,17 @@ import cors from 'cors';
 import Web3 from "js/lib/web3";
 import Account from 'js/lib/Account';
 import Factory from 'js/lib/contracts/Factory';
-
-
-app.use(cors())
+// import {
+//     advanceBlock,
+//     advanceToBlock,
+//     increaseTime,
+//     increaseTimeTo,
+//     duration,
+//     revert,
+//     latestTime
+// } from 'truffle-test-helpers';
+// import {advanceBlock} from 'openzeppelin-solidity/test/helpers/advanceToBlock'
+app.use(cors());
 app.use(express.json());
 
 const Web3EthAbi = require('web3-eth-abi');
@@ -76,7 +84,7 @@ async function test() {
     let address = await newNewRelay.owner.call({from});
     console.log("Name: ", name);
     console.log("Address: ", address);
-    
+
     const newFlip = await deployFlip();
 
     console.log("Flip: ", await newFlip.flipped.call({from}))
@@ -128,8 +136,25 @@ app.post('/key', (req, res) => {
     processKey(req.body.identityAddress, req.body.publicKey, res)
 })
 app.post('/exec', (req, res) => {
-    processExec(req.body.relayAddress, req.body.to, req.body.value, req.body.data, req.body.gasPrice, req.body.gasLimit, res);
+    processExec(req.body.relayAddress, req.body.to, req.body.value, Web3EthAbi.encodeFunctionSignature(req.body.data), req.body.gasPrice, req.body.gasLimit, res);
 })
 
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+function advanceBlock() {
+    return new Promise((resolve, reject) => {
+        Web3.getWeb3().currentProvider.sendAsync({
+            jsonrpc: '2.0',
+            method: 'evm_mine',
+            id: Date.now(),
+        }, (err, res) => {
+            return err ? reject(err) : resolve(res);
+        });
+    });
+}
+
+setInterval(() => {
+    // console.log("advancing");
+    advanceBlock();
+}, 5 * 1000);

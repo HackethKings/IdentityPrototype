@@ -20,13 +20,20 @@ body {
   color: map_get($theme-colors, 'secondary');
   font-family: 'Roboto', sans-serif;
   &.btc-sucks {
-    background: red;
+    background: #000;
 
     font-family: 'Comic Sans MS';
     * {
       font-family: 'Comic Sans MS';
     }
+    .navbar {
+      display: none !important;
+    }
   }
+}
+
+.modal-title {
+  color: map_get($theme-colors, 'primary');
 }
 
 .f-l {
