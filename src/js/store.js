@@ -11,7 +11,8 @@ let state = {
     web3: null,
     isLoading: false,
     /** HACKETH **/
-    identity: null
+    identity: null,
+    allowScanQrModal: false
 
 };
 
@@ -47,6 +48,9 @@ export default new Vuex.Store({
         },
         setIdentity(state, identity) {
             state.identity = identity;
+        },
+        setAllowScanQrModal(state, allowScanQrModal) {
+            state.allowScanQrModal = allowScanQrModal;
         }
     },
     actions: {

@@ -26,6 +26,6 @@ function insert(base, ...items) {
 
 module.exports = {
     base,
-    local: insert(base, "babel-polyfill", "webpack-dev-server/client"),
-    production: insert(base, "babel-polyfill")
+    local: insert(base, "webpack-dev-server/client"),
+    production: insert(base)
 };

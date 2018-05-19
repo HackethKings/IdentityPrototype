@@ -16,6 +16,7 @@
             </div>
         </div>
         <div class="navbar__menu text-uppercase d-flex">
+            <span class="f-l" @click="scanQr" style="opacity: .5;">SCAN QR</span>
             <div class="btn navbar__item m-0 btn-flat" style="vertical-align: middle;" v-if="status">
                 <div class="status-dot va-m"></div>
                 <span class="va-m h6" v-if="identity">Hi, {{identity.username}}</span>
@@ -65,7 +66,7 @@
             this.contract = window.contract;
         },
         methods: {
-            ...mapMutations(['setIdentity']),
+            ...mapMutations(['setIdentity', 'setAllowScanQrModal']),
             logout() {
                 new IdentityRepository().logout();
                 this.setIdentity(null);
@@ -80,6 +81,10 @@
                 //         console.log('error ' + this.context);
                 //     }
                 // });
+            },
+            scanQr() {
+                this.setAllowScanQrModal(true);
+
             }
         }
     }

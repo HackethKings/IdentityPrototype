@@ -26,7 +26,6 @@
                     <div>
                         <button class="btn btn-secondary" v-on:click="seen = !seen">Add key</button>
                     </div>
-                    <qrcode-reader @decode="onDecode" v-show="seen"></qrcode-reader>
                 </div>
                 <QrModal
                         :username="qrIdentity.username"
@@ -34,6 +33,9 @@
                         v-if="qrIdentity" @cancel="handleCancel"
                         ref="qrModal"
                         @ok="handlePublicKeyAdded"></QrModal>
+                <ScanQrModal
+                        v-if="allowScanQrModal"
+                        ref="scanQrModal"></ScanQrModal>
             </div>
         </div>
         <div class="col-sm">
@@ -54,8 +56,8 @@
     import IdentityRepository from "../lib/repositories/IdentityRepository";
     import ENS from "../lib/ENS";
     import QrModal from 'js/components/QrModal';
+    import ScanQrModal from 'js/components/ScanQrModal';
     import Identity from "../lib/Identity";
-    import { QrcodeReader } from 'vue-qrcode-reader'
 
     export default {
         mainAccount: null,
@@ -72,9 +74,9 @@
             }
         },
         computed: {
-            ...mapState(['status', 'user', 'localKeys', 'identity'])
+            ...mapState(['status', 'user', 'localKeys', 'identity', 'allowScanQrModal'])
         },
-        components: {QrModal, QrcodeReader},
+        components: {QrModal, ScanQrModal},
         methods: {
             ...mapMutations(['setIdentity']),
 
@@ -111,9 +113,7 @@
                 alert('Fail adding new key to identity');
                 this.qrIdentity = null;
             },
-            onDecode (content) {
-                console.log(content);
-            },
+
         }
     }
 </script>
