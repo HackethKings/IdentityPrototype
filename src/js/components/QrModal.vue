@@ -2,8 +2,9 @@
     <div>
         <b-modal @hidden="$emit('hidden')" centered title="QR Code"
                  ref="myModalRef"
-                 :ok-title="`Poprawna autoryzacja`" cancel-title="Odrzuć" @ok="$emit('ok')">
-            Publiczny klucz:{{address}}
+                 :ok-title="`Authorize`" cancel-title="Reject" @ok="$emit('ok')">
+            Username:{{username}}
+            Address:{{address}}
             <canvas ref="canvas"></canvas>
         </b-modal>
     </div>
@@ -11,7 +12,7 @@
 <script>
     import QRCode from 'qrcode'
     export default {
-        props: ['address'],
+        props: ['address', 'username'],
         methods: {},
         mounted() {
 
