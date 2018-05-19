@@ -52,7 +52,8 @@
     "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-server": "^2.4.5",
-    "webpack-md5-hash": "0.0.5"
+    "webpack-md5-hash": "0.0.5",
+    "truffle-hdwallet-provider": "0.0.5"
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.3-beta",
