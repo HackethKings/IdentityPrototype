@@ -1,8 +1,7 @@
 <template>
     <div>
         <b-modal @hidden="$emit('hidden')" centered title="QR Code"
-                 ref="myModalRef"
-                 :ok-title="`Authorize`" cancel-title="Reject" @ok="$emit('ok')">
+                 ref="myModalRef" cancel-title="Reject" @ok="$emit('ok')">
             Username:{{username}}
             Address:{{address}}
             <canvas ref="canvas"></canvas>

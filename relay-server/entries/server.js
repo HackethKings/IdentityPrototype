@@ -3,9 +3,14 @@ const app = express()
 
 app.use(express.json());
 
+import cors from 'cors';
 import Web3 from "js/lib/web3";
 import Account from 'js/lib/Account';
 import Factory from 'js/lib/contracts/Factory';
+
+const app = express()
+
+app.use(cors())
 
 const Web3EthAbi = require('web3-eth-abi');
 var contract = require("truffle-contract");
@@ -37,10 +42,10 @@ async function init() {
 
     let newRelay = await deploy("newguy", "0x0123");
     let newFlip = await deploy("newguy", "0x0123");
-    
+
     console.log("Name: ", await newRelay.name.call({from}))
     console.log("Address: ", await newRelay.owner.call({from}))
-    
+
     test(newRelay)
 }
 

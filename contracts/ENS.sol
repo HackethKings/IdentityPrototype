@@ -13,9 +13,10 @@ contract ENS {
     }
 
     function setUserIdentityAddress(string username, address identityAddress) public {
-        require(usersToIdentityAddress[keccak256(username)] == address(0));
+        bytes32 hashedUsername = keccak256(username);
+        require(usersToIdentityAddress[hashedUsername] == address(0));
 
-        usersToIdentityAddress[keccak256(username)] = identityAddress;
+        usersToIdentityAddress[hashedUsername] = identityAddress;
     }
 
     function getIdentityAddress(string username) public view returns (address){
