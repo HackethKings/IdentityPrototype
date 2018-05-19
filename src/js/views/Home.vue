@@ -23,9 +23,6 @@
                     <div v-else>
                         Great! You are logged in as {{identity.username}}
                     </div>
-                    <div>
-                        <button class="btn btn-secondary" v-on:click="seen = !seen">Add key</button>
-                    </div>
                 </div>
                 <QrModal
                         :username="qrIdentity.username"
