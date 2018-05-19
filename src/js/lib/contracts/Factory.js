@@ -4,8 +4,9 @@ import bus from 'js/bus';
 import web3 from "../web3";
 
 const contract = require('truffle-contract');
-const _TimeConstrainedCounter = require('TimeConstrainedCounter');
-const _FlipContract = require('FlipContract');
+const _TimeConstrainedCounter = require('TimeConstrainedCounter.json');
+const _FlipContract = require('FlipContract.json');
+const _ENS = require('ENS.json');
 let _objs = {}, _users = null;
 const Factory = {
     async TimeConstrainedCounter() {
@@ -28,6 +29,16 @@ const Factory = {
         _objs.FlipContract = await _objs.FlipContract;
         return _objs.FlipContract;
     },
+    async ENS() {
+        if (_objs.ENS instanceof Promise) {
+            return await _objs.ENS;
+        } else if (_objs.ENS) {
+            return _objs.ENS;
+        }
+        _objs.ENS = this.get('ENS');
+        _objs.ENS = await _objs.ENS;
+        return _objs.ENS;
+    },
     async deployNewContract(name, from) {
 
         const contractDefaults = {
@@ -37,9 +48,6 @@ const Factory = {
         };
         let obj = '';
         switch (name) {
-            case 'TimeConstrainedCounter':
-                obj = contract(_TimeConstrainedCounter);
-                break;
             case 'FlipContract':
                 obj = contract(_FlipContract);
                 break;
@@ -63,7 +71,9 @@ const Factory = {
                 break;
             case 'FlipContract':
                 obj = contract(_FlipContract);
-                console.log("XXXXX",)
+                break;
+            case 'ENS':
+                obj = contract(_ENS);
                 break;
         }
 

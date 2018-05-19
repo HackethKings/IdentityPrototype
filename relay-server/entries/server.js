@@ -46,6 +46,7 @@ async function init() {
     const from = accounts[0];
     console.log(accounts)
     const flip = await Factory.FlipContract();
+    const ens = await Factory.ENS();
     let res = await flip.counter({from});
     console.log(res);
     await flip.add({from});

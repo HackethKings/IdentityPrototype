@@ -1,21 +1,15 @@
+import Factory from 'js/lib/contracts/Factory'
+
 const USE_MOCKUP = true;
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export default class ENS {
     static address;
+
     getIdentityAddressByUsername(username) {
-        return new Promise((resolve) => {
-            if (USE_MOCKUP) {
-                if (typeof address !== 'undefined') {
-                    resolve(address);
-                } else {
-                    resolve(ZERO_ADDRESS);
-                }
-            } else {
-                /**
-                 * TODO: Integrate with ENS
-                 */
-            }
+        return new Promise(async (resolve) => {
+            const ens = await Factory.ENS();
+            const res = await ens.getIdentityAddress.call(username);
+            resolve(res);
         })
     }
 
