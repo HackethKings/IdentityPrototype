@@ -124,7 +124,8 @@ async function processExec(relayAddress, to, value, data, gasPrice, gasLimit, re
 
 async function processKey(relayAddress, newKey, res) {
     const relayInstance = await getRelayInstance(relayAddress);
-    let tx = await relayInstance.addKey(newKey);
+    console.log(newKey,relayAddress);
+    let tx = await relayInstance.addKey(newKey,{from});
     res.send(tx)
 }
 

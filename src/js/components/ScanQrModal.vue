@@ -40,12 +40,12 @@
                 this.$refs.myModalRef.show();
                 this.$nextTick(() => {
                     let scanner = new Instascan.Scanner({video: this.$refs.preview});
-                    scanner.addListener('scan', function (content) {
+                    scanner.addListener('scan', (content) => {
                         // alert(content);
                         console.log(content);
                         this.handleSuccessfulKeyScan(content);
                     });
-                    Instascan.Camera.getCameras().then(function (cameras) {
+                    Instascan.Camera.getCameras().then((cameras) => {
                         if (cameras.length > 0) {
                             scanner.start(cameras[0]);
                         } else {
