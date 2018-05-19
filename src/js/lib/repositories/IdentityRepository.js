@@ -1,5 +1,5 @@
 import Identity from 'js/lib/Identity';
-import web3 from '../web3';
+import test from 'ethereumjs-wallet';
 
 export default class IdentityRepository {
     static IDENTITY_ADDRESS = 'identity_address';
@@ -26,7 +26,16 @@ export default class IdentityRepository {
         this.ls.setItem(IdentityRepository.PRIVATE_KEY, privateKey);
     }
 
-    generateNewPrivateKey() {
-        return web3.getWeb3().eth.accounts.create().privateKey;
+    generateNewWallet() {
+        const w = test.generate()
+        console.log(w, w.getAddressString(), w.getPublicKeyString(), w.getPrivateKeyString());
+        return {
+            address: w.getAddressString(),
+            privateKey: w.getPrivateKeyString()
+        };
+        // const w = web3.getWeb3();
+        // return w.eth.personal.newAccount();
+        // const a = w.eth.accounts;
+        // return a.create();
     }
 }
