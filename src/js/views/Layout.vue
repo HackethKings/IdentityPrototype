@@ -8,11 +8,27 @@
             <slot name="content">
                 <router-view></router-view>
             </slot>
-            <div class="contract-invalid-lock" v-if="!status">
-                <div style="position: relative;">
-                    Ładuję...
-                </div>
-            </div>
+
+            <ul class="cm-footer__list cm-footer__list--images">
+                <li>
+                    <a href="https://www.netguru.co/blog/netguru-deloitte-fast-50" class="cm-footer__menu-link">
+                        <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_deloitte.png?t=1526654198212"
+                             alt="Deloitte" class="cm-footer__menu-image">
+                    </a>
+                </li>
+                <li>
+                    <a class="cm-footer__menu-link">
+                        <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_forbes.png?t=1526654198212"
+                             alt="Forbes" class="cm-footer__menu-image cm-footer__menu-image--forbes">
+                    </a>
+                </li>
+                <li>
+                    <a class="cm-footer__menu-link">
+                        <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_inc5000.png?t=1526654198212"
+                             alt="INC5000" class="cm-footer__menu-image cm-footer__menu-image--inc">
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <div class="loading" v-if="isLoading">

@@ -30,6 +30,36 @@ h1 {
   font-family: 'Archivo Black';
 }
 
+.navbar-item {
+  margin: 0 5px;
+  font-weight: normal;
+  text-decoration: none;
+  &:hover {
+
+    text-decoration: none;
+  }
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  svg {
+    width: 100%;
+  }
+}
+
+.cm-footer__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  img{
+    max-height: 30px;
+  }
+}
+
 @keyframes CustomAnimation {
   0% {
     background-position: 0% 50%;

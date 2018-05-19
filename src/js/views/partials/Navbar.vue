@@ -1,6 +1,19 @@
 <template>
     <div class="navbar d-flex w-100 fixed-top">
-        <div class="navbar__logo">
+        <div class="navbar__logo container">
+            <div class="logo h6"
+                 style="position: fixed;left: 50%;top: 10px;transform:translate(-50%,0);font-size: 1.7rem;">
+
+                <span v-html="logo" alt="" class="logo-img"></span>
+                <span style="display: inline-block;margin-left: 20px;color: #fff;">IdentityBlockchain</span>
+            </div>
+            <div class="col-sm" style="display: none;">
+                <router-link v-html="'Home'" class="va-m h6 navbar-item"
+                             :to="{ name: 'home' }"></router-link>
+                <router-link v-html="'APP'" class="h6 navbar-item"
+                             v-if="identity"
+                             :to="{ name: 'app' }"></router-link>
+            </div>
         </div>
         <div class="navbar__menu text-uppercase d-flex">
             <div class="btn navbar__item m-0 btn-flat" style="vertical-align: middle;" v-if="status">
@@ -29,7 +42,8 @@
 
     import Vue from 'vue';
     import Component from 'vue-class-component'
-    // import logo from 'img/logo.svg';
+    import logo from '../../../logo.svg';
+    import grant from '../../../grant.png';
     import {mapState, mapMutations} from 'vuex';
     import IdentityRepository from "../../lib/repositories/IdentityRepository";
 
@@ -39,6 +53,8 @@
         props: ['admin'],
         data() {
             return {
+                logo,
+                grant,
                 contract: null
             }
         },
