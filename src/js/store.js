@@ -10,7 +10,10 @@ let state = {
     receipts: [],
     web3: null,
     isLoading: false,
-    localKeys: []
+    /** HACKETH **/
+    localKeys: [],
+    accountKey: null
+
 };
 
 Vue.use(Vuex);

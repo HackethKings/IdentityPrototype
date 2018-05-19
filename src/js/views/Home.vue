@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
         <div id="deploy" class="animated jello">
-            <form action="" v-if="!localKeys.length">
+            <form action="" v-if="!accountKey" onsubmit="handleSubmit()">
                 <h2>Metamaskless login*</h2>
                 <label for="name">name:</label>
                 <input type="text" v-model="username" id="name"/>
@@ -10,7 +10,7 @@
                     <option value=".hack.eth">.hack.eth</option>
 
                 </select><br/>
-                <button style="font-size: 100px;background-color: #f00;">LOGIN</button>
+                <button style="font-size: 100px;background-color: #f00;" type="submit">LOGIN</button>
             </form>
         </div>
     </div>
@@ -33,8 +33,16 @@
             }
         },
         computed: {
-            ...mapState(['status', 'user', 'localKeys'])
+            ...mapState(['status', 'user', 'localKeys', 'accountKey'])
         },
-        components: {}
+        components: {},
+        handleSubmit() {
+            /**
+             * TODO(@partyka): get identity contract address from ENS
+             * TODO(@pawel): generate private key
+             * TODO: show qr code which will add our new key to identity contract
+             * TODO: perform challengemsg test from common.js
+             */
+        }
     }
 </script>
