@@ -1,8 +1,15 @@
 export default class Identity {
-    constructor(username, identityAddress, privateKey, publicKey = undefined) {
+    /**
+     *
+     * @param username
+     * @param identityAddress
+     * @param privateKey
+     * @param address
+     */
+    constructor(username, identityAddress, privateKey, address = undefined) {
         this.username = username;
         this.identityAddress = identityAddress;
         this.privateKey = privateKey;
-        this.publicKey = publicKey;
+        this.address = address;
     }
 }
