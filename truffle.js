@@ -1,7 +1,3 @@
-var HDWalletProvider = require("truffle-hdwallet-provider");
-// reference to mnemonic that generates your accounts.
-var mnemonic = "galaxy avoid gain island history sting actress earn alien there tool pair";
-
 require("babel-register")({
     ignore: /node_modules(?!\/zeppelin-solidity)/,
     presets: [
