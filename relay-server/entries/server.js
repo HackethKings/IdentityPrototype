@@ -1,4 +1,8 @@
 const express = require('express')
+const app = express()
+
+app.use(express.json());
+
 import cors from 'cors';
 import Web3 from "js/lib/web3";
 import Account from 'js/lib/Account';
@@ -62,8 +66,9 @@ init()
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.post('/deploy', (req, res) => {
-    console.log(req.body)
-    res(req.body)
+    console.log(req.body.address)
+    res.send(req.body)
 })
+
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
