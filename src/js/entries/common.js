@@ -39,7 +39,6 @@ export default class Common {
                 @
                 TODO: load localkeys from localstorage
                 TODO: check local storage for key
-                TODO: if key present create challengemsg transaction
                  */
             }
         });
