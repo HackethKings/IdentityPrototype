@@ -1,13 +1,14 @@
 <template>
     <div class="row" style="margin-top: 100px;">
         <div class="col-sm">
-            <h1>Go blockchain.<br/>Go Free.</h1>
+            <h1>Go Blockchain.<br/>Go Free.</h1>
             <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
                 <div id="deploy" class="animated jello">
                     <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
                         <label for="name">name:</label>
                         <div class="input-group">
-                            <input type="text" v-model="username" id="name" ref="shake" class="form-control" placeholder="username"/>
+                            <input type="text" v-model="username" id="name" ref="shake" class="form-control"
+                                   placeholder="username"/>
                             <div class="input-group-append">
                                 <select v-model="domain" class="custom-select">
                                     <option value=".eth">.eth</option>
@@ -32,8 +33,10 @@
             </div>
         </div>
         <div class="col-sm">
-
-            <img :src="gif" alt="" style="max-width: 100%;">
+            <div>
+                <img :src="gif" alt="" style="max-width: 100%;"><br/>
+                <div style="font-size: 0.8em;opacity: .4;">© https://dribbble.com/mikepiechota</div>
+            </div>
         </div>
     </div>
 </template>
