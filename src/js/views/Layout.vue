@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin-top: 50px;">
         <Navbar>
             <slot name="navbar"></slot>
         </Navbar>

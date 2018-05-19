@@ -5,6 +5,7 @@ import web3 from "../web3";
 
 const contract = require('truffle-contract');
 const _TimeConstrainedCounter = require('TimeConstrainedCounter');
+const _FlipContract = require('FlipContract');
 let _objs = {}, _users = null;
 const Factory = {
     async TimeConstrainedCounter() {
@@ -17,6 +18,16 @@ const Factory = {
         _objs.TimeConstrainedCounter = await _objs.TimeConstrainedCounter;
         return _objs.TimeConstrainedCounter;
     },
+    async FlipContract() {
+        if (_objs.FlipContract instanceof Promise) {
+            return await _objs.FlipContract;
+        } else if (_objs.FlipContract) {
+            return _objs.FlipContract;
+        }
+        _objs.FlipContract = this.get('FlipContract');
+        _objs.FlipContract = await _objs.FlipContract;
+        return _objs.FlipContract;
+    },
     /**
      * Get contract instance
      * @param name
@@ -27,6 +38,9 @@ const Factory = {
         switch (name) {
             case 'TimeConstrainedCounter':
                 obj = contract(_TimeConstrainedCounter);
+                break;
+            case 'FlipContract':
+                obj = contract(_FlipContract);
                 break;
         }
 

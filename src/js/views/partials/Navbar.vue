@@ -16,10 +16,10 @@
             </div>
         </div>
         <div class="navbar__menu text-uppercase d-flex">
-            <span class="f-l" @click="scanQr" style="opacity: .5;">SCAN QR</span>
             <div class="btn navbar__item m-0 btn-flat" style="vertical-align: middle;" v-if="status">
                 <div class="status-dot va-m"></div>
                 <span class="va-m h6" v-if="identity">Hi, {{identity.username}}</span>
+                <span class="f-l" v-if="identity" @click="scanQr" style="opacity: .5;">SCAN QR</span>
                 <span class="f-l" v-if="identity" @click="logout" style="opacity: .5;">logout</span>
             </div>
             <div class="btn navbar__item m-0 h6 btn-flat" style="vertical-align: middle;"
