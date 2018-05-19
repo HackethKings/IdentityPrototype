@@ -36,7 +36,7 @@ const Factory = {
         } else if (_objs.GasReturnRelay) {
             return _objs.GasReturnRelay;
         }
-        _objs.GasReturnRelay = this.get('FlipContract');
+        _objs.GasReturnRelay = this.get('GasReturnRelay');
         _objs.GasReturnRelay = await _objs.GasReturnRelay;
         return _objs.GasReturnRelay;
     },
