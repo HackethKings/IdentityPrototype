@@ -3,6 +3,17 @@ pragma solidity ^0.4.21;
 contract GasReturnRelay  {
     event ExecutedGasRelayed(bool success);
 
+    address public owner;
+    string public name;
+
+    function setOwner(address newOwner) public {
+        owner = newOwner;
+    }
+
+    function setName(string newName) public {
+        name = newName;
+    }
+
     function () public payable {
     }
 

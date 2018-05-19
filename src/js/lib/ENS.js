@@ -1,10 +1,6 @@
 import Factory from 'js/lib/contracts/Factory'
 
-const USE_MOCKUP = true;
-
 export default class ENS {
-    static address;
-
     getIdentityAddressByUsername(username) {
         return new Promise(async (resolve) => {
             const ens = await Factory.ENS();
@@ -13,15 +9,11 @@ export default class ENS {
         })
     }
 
-    register(username, newAddress) {
+    register(username, address) {
         return new Promise((resolve) => {
-            if (USE_MOCKUP) {
-                address = newAddress;
-            } else {
-                /**
-                 * TODO: Integrate with ENS
-                 */
-            }
+            const ens = await Factory.ENS();
+            const res = await ens.setUserIdentityAddress(username, address);
+            resolve(res);
         })
     }
 }

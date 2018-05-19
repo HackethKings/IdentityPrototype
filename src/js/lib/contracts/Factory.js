@@ -4,6 +4,7 @@ import bus from 'js/bus';
 import web3 from "../web3";
 
 const contract = require('truffle-contract');
+const _GasReturnRelay = require('GasReturnRelay.json');
 const _TimeConstrainedCounter = require('TimeConstrainedCounter.json');
 const _FlipContract = require('FlipContract.json');
 const _ENS = require('ENS.json');
@@ -29,6 +30,16 @@ const Factory = {
         _objs.FlipContract = await _objs.FlipContract;
         return _objs.FlipContract;
     },
+    async GasReturnRelay() {
+        if (_objs.GasReturnRelay instanceof Promise) {
+            return await _objs.GasReturnRelay;
+        } else if (_objs.GasReturnRelay) {
+            return _objs.GasReturnRelay;
+        }
+        _objs.GasReturnRelay = this.get('FlipContract');
+        _objs.GasReturnRelay = await _objs.GasReturnRelay;
+        return _objs.GasReturnRelay;
+    },
     async ENS() {
         if (_objs.ENS instanceof Promise) {
             return await _objs.ENS;
@@ -50,6 +61,9 @@ const Factory = {
         switch (name) {
             case 'FlipContract':
                 obj = contract(_FlipContract);
+                break;
+            case 'GasReturnRelay':
+                obj = contract(_GasReturnRelay);
                 break;
         }
 

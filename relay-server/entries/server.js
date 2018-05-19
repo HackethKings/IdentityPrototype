@@ -1,78 +1,67 @@
+const express = require('express')
+const app = express()
+
+
 import Web3 from "js/lib/web3";
 import Account from 'js/lib/Account';
 import Factory from 'js/lib/contracts/Factory';
 
+const Web3EthAbi = require('web3-eth-abi');
 var contract = require("truffle-contract");
 
 Web3.init()
-// const web3 = Web3.getWeb3()
-// let account0 = web3.eth.accounts[0];
-//
-// console.log(account0)
-// console.log(web3.fromWei(web3.eth.getBalance(account0)).toNumber(), 'ETH');
-//
-//
-// function build(currentProvider) {
-//     let FlipContract = require("../../build/contracts/FlipContract.json");
-//     let flipContract = contract(FlipContract);
-//     flipContract.setProvider(currentProvider);
-//     return fixTruffleContractCompatibilityIssue(flipContract);
-// }
-//
-// // Workaround for a compatibility issue between web3@1.0.0-beta.29 and truffle-contract@3.0.3
-// // https://github.com/trufflesuite/truffle-contract/issues/57#issuecomment-331300494
-// function fixTruffleContractCompatibilityIssue(contract) {
-//     if (typeof contract.currentProvider.sendAsync !== "function") {
-//         contract.currentProvider.sendAsync = function() {
-//             return contract.currentProvider.send.apply(
-//                 contract.currentProvider, arguments
-//             );
-//         };
-//     }
-//     return contract;
-// }
-//
-//
-// let flipContract = build(web3);
-//
-// flipContract.deployed();
-//
-// // then(function(deployed) {
-// //     return deployed.flip();
-// // });
+var from
+
+async function executeAndReturnGas(relay, to, value, data, gasPrice, gasLimit) {
+    let tx = await relay.callGasRelayed(to, value, data, gasPrice, gasLimit, {from});
+    return tx;
+}
+
+async function deployFlip() {
+    const flip = await Factory.deployNewContract('FlipContract', from);
+    return flip;
+}
+
+async function deploy(name, publicAddress) {
+    const newRelay = await Factory.deployNewContract('GasReturnRelay', from);
+    //TODO refactor as constructor functions
+    await newRelay.setOwner(publicAddress, {from})
+    await newRelay.setName(name, {from})
+    return newRelay;
+}
 
 async function init() {
     let accounts = await Account.getAccounts()
-    const from = accounts[0];
-    console.log(accounts)
-    const flip = await Factory.FlipContract();
-    const ens = await Factory.ENS();
-    let res = await flip.counter({from});
-    console.log(res);
-    await flip.add({from});
-    await flip.add({from});
-    await flip.add({from});
-    await flip.add({from});
-    res = await flip.counter({from});
-    res = await Factory.deployNewContract('FlipContract', from);
-    console.log(res)
+    from = accounts[0];
 
-    // instance = await FlipContract.deployed();
-    //
-    // let tx = await instance.counter({from: account})
-    // console.log('before: ', tx);
-    //
-    // let flip = await instance.add({from: account})
-    //
-    //
-    //
-    // let counterAfter = await instance.counter.call({from: account})
-    // console.log('after: ', counterAfter.valueOf());
-    //
-    // let time = await instance.time.call({from: account})
-    // console.log('time: ', time.valueOf());
+    let newRelay = await deploy("newguy", "0x0123");
+    let newFlip = await deploy("newguy", "0x0123");
+    
+    console.log("Name: ", await newRelay.name.call({from}))
+    console.log("Address: ", await newRelay.owner.call({from}))
+    
+    test(newRelay)
+}
 
+async function test(newRelay) {
+    const newFlip = await deployFlip();
 
+    console.log("Flip: ", await newFlip.flipped.call({from}))
+    console.log("flipping through relay...")
+
+    let data = Web3EthAbi.encodeFunctionSignature('flip()');
+    let tx = await executeAndReturnGas(newRelay, newFlip.address, 0, data, 0, 100000);
+    //console.log("tx: ", tx)
+
+    console.log("Flip: ", await newFlip.flipped.call({from}))
 }
 
 init()
+
+app.get('/', (req, res) => res.send('Hello World!'))
+app.post('/deploy', (req, res) => {
+    console.log(req.body)
+    res(req.body)
+})
+
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
