@@ -5,7 +5,7 @@ var ENS = artifacts.require("./ENS.sol");
 
 module.exports = function(deployer) {
   // deployer.deploy(ClaimHolder);
-  // deployer.deploy(GasReturnRelay);
+  deployer.deploy(GasReturnRelay);
   deployer.deploy(FlipContract);
   deployer.deploy(ENS);
 };

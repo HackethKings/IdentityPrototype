@@ -12,6 +12,7 @@ app.use(express.json());
 
 const Web3EthAbi = require('web3-eth-abi');
 var contract = require("truffle-contract");
+const _GasReturnRelay = require('GasReturnRelay.json');
 
 Web3.init()
 var from
@@ -56,12 +57,23 @@ async function init() {
     test()
 }
 
+async function getRelayInstance(address) {
+    let relay = contract(_GasReturnRelay);
+    relay.setProvider(Web3.getWeb3().currentProvider);
+    relay = await relay.at(address);
+    return relay
+}
+
 async function test() {
     let newRelay = await deployRelay("newweguy", "0x01213");
+    console.log("created relay at:", newRelay.address)
 
+    let newNewRelay = await getRelayInstance(newRelay.address);
 
-    let name = await newRelay.name.call({from});
-    let address = await newRelay.owner.call({from});
+    console.log("newnewnew relay:", newNewRelay.address)
+
+    let name = await newNewRelay.name.call({from});
+    let address = await newNewRelay.owner.call({from});
     console.log("Name: ", name);
     console.log("Address: ", address);
     
@@ -97,13 +109,13 @@ async function processDeploy(name, address, res) {
 }
 
 async function processExec(relayAddress, to, value, data, gasPrice, gasLimit, res) {
-    const relayInstance = await Factory.GasReturnRelay().at(relayAddress);
+    const relayInstance = await getRelayInstance(relayAddress);
     let tx = await executeAndReturnGas(relayInstance, to, value, data, gasPrice, gasLimit)
     res.send(tx)
 }
 
 async function processKey(relayAddress, newKey, res) {
-    const relayInstance = await Factory.GasReturnRelay().at(relayAddress);
+    const relayInstance = await getRelayInstance(relayAddress);
     let tx = await relayInstance.addKey(newKey);
     res.send(tx)
 }
