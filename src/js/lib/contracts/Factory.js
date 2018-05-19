@@ -6,6 +6,7 @@ import web3 from "../web3";
 const contract = require('truffle-contract');
 const _TimeConstrainedCounter = require('TimeConstrainedCounter');
 const _FlipContract = require('FlipContract');
+const _GasReturnRelay = require('GasReturnRelay');
 let _objs = {}, _users = null;
 const Factory = {
     async TimeConstrainedCounter() {
@@ -28,7 +29,17 @@ const Factory = {
         _objs.FlipContract = await _objs.FlipContract;
         return _objs.FlipContract;
     },
-    async deployNewContract(name, from) {
+    async GasReturnRelay() {
+        if (_objs.GasReturnRelay instanceof Promise) {
+            return await _objs.GasReturnRelay;
+        } else if (_objs.GasReturnRelay) {
+            return _objs.GasReturnRelay;
+        }
+        _objs.GasReturnRelay = this.get('FlipContract');
+        _objs.GasReturnRelay = await _objs.GasReturnRelay;
+        return _objs.GasReturnRelay;
+    },
+    async deployNewContract(name, from, owner) {
 
         const contractDefaults = {
             from: from,
@@ -42,6 +53,9 @@ const Factory = {
                 break;
             case 'FlipContract':
                 obj = contract(_FlipContract);
+                break;
+            case 'GasReturnRelay':
+                obj = contract(_GasReturnRelay);
                 break;
         }
 
