@@ -11246,6 +11246,10 @@ vue-blockui@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/vue-blockui/-/vue-blockui-1.1.7.tgz#5d9f2ec4a1e29d7aaacc4e5726d4539f09dd9bd6"
 
+vue-body-class@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/vue-body-class/-/vue-body-class-2.0.0-beta.2.tgz#d11bda0ef9ed2fc9dceec0325ca87c0099f17eea"
+
 vue-class-component@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.2.0.tgz#7adb1daa9a868c75f30f97f33f4f1b94aee62089"

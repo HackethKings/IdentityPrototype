@@ -10,18 +10,21 @@ import BlockUI from 'vue-blockui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import BootstrapVue from 'bootstrap-vue';
+import vbclass from 'vue-body-class'
 
 const routes = DefaultRoutes;
 const router = new VueRouter({
     mode: 'history',
     routes,
 });
+
 Vue.router = router;
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 
 Vue.use(VueAxios, axios);
 Vue.use(BlockUI);
+Vue.use(vbclass, router)
 // Vue.filter('img', function ($val) {
 //     return '/img/' + $val;
 // });
