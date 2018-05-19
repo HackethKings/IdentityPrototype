@@ -122,7 +122,12 @@
                         this.$refs.qrModal.show();
                     }
                     //event NewKeyAdded
-
+                    const contract = require('truffle-contract');
+                    const _GasReturnRelay = require('GasReturnRelay.json');
+                    _GasReturnRelay.at(identityAddress)
+                    .then((contract) => contract.NewKeyAdded().watch((err, response) => {
+                        console.log(response);
+                    }));
                 } else {
                     //deploy
                     // const identityAddress = await (new Relay()).deploy(username, wallet.address);
