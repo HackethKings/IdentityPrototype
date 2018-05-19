@@ -1,4 +1,3 @@
-import RelayRequest from './RelayRequest';
 import axios from 'axios';
 
 export default class Relay {
@@ -9,8 +8,8 @@ export default class Relay {
             //1. generate transaction
             //2. send to relay
             //fetch('/login')
-            const res = await RelayRequest.fetch(RelayRequest.LOGIN_ENDPOINT);
-            resolve();
+            // const res = await RelayRequest.fetch(RelayRequest.LOGIN_ENDPOINT);
+            // resolve();
         });
     }
 
