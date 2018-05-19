@@ -11,8 +11,7 @@ let state = {
     web3: null,
     isLoading: false,
     /** HACKETH **/
-    localKeys: [],
-    accountKey: null
+    identity: null
 
 };
 
@@ -45,6 +44,9 @@ export default new Vuex.Store({
         setAccountKey(state, key) {
             state.accountKey = key;
             window.localStorage.setItem('accountKey', key);
+        },
+        setIdentity(state, identity) {
+            state.identity = identity;
         }
     },
     actions: {

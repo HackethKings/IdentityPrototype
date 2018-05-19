@@ -1,4 +1,5 @@
-$theme-colors: ("primary": #f00, "secondary": #0f0, "light": #00f);
+//$theme-colors: ("primary": #197BBD, "secondary": #C2B8B2, "light": #125E8A);
+$theme-colors: ("primary": #99E1D9, "secondary": #F0F7F4, "light": #32292F);
 // Body
 $body-bg: map_get($theme-colors, "light");
 

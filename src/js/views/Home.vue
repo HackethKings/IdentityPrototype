@@ -1,27 +1,56 @@
 <template>
-    <div class="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
-        <div id="deploy" class="animated jello">
-            <form action="" v-if="!accountKey" onsubmit="handleSubmit()">
-                <h2>Metamaskless login*</h2>
-                <label for="name">name:</label>
-                <input type="text" v-model="username" id="name"/>
-                <select v-model="domain">
-                    <option value=".eth">.eth</option>
-                    <option value=".hack.eth">.hack.eth</option>
+    <div class="row" style="margin-top: 100px;">
+        <div class="col-sm">
+            <h1>Go Blockchain.<br/>Go Free.</h1>
+            <div classss="p-5 flex-row d-flex v-h p-0 m-0 align-items-center justify-content-center">
+                <div id="deploy" class="animated jello">
+                    <form action="" v-if="!identity" @submit.prevent="handleSubmit()">
+                        <label for="name">name:</label>
+                        <div class="input-group">
+                            <input type="text" v-model="username" id="name" ref="shake" class="form-control"
+                                   placeholder="username"/>
+                            <div class="input-group-append">
+                                <select v-model="domain" class="custom-select">
+                                    <option value=".eth">.eth</option>
+                                    <option value=".hack.eth">.hack.eth</option>
 
-                </select><br/>
-                <button style="font-size: 100px;background-color: #f00;" type="submit">LOGIN</button>
-            </form>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-secondary">Log in</button>
+                    </form>
+                    <div v-else>
+                        Great! You are logged in as {{identity.username}}
+                    </div>
+                </div>
+                <QrModal
+                        :username="qrIdentity.username"
+                        :address="qrIdentity.address"
+                        v-if="qrIdentity" @cancel="handleCancel"
+                        ref="qrModal"
+                        @ok="handlePublicKeyAdded"></QrModal>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div>
+                <img :src="gif" alt="" style="max-width: 100%;"><br/>
+                <div style="font-size: 0.8em;opacity: .4;">© https://dribbble.com/mikepiechota</div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import gif from '../../welcome.gif';
     import Vue from 'vue';
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
-    import {mapState} from 'vuex';
-    import Web3 from 'web3'
+    import {mapState, mapMutations} from 'vuex';
+    import IdentityRepository from "../lib/repositories/IdentityRepository";
+    import ENS from "../lib/ENS";
+    import QrModal from 'js/components/QrModal';
+    import Identity from "../lib/Identity";
 
     export default {
         mainAccount: null,
@@ -29,27 +58,53 @@
         user: {},
         data: function () {
             return {
+                gif: gif,
                 username: '',
-                domain: '.eth'
+                domain: '.eth',
+                qrIdentity: null,
+                shake: false
             }
         },
         computed: {
-            ...mapState(['status', 'user', 'localKeys', 'accountKey'])
+            ...mapState(['status', 'user', 'localKeys', 'identity'])
         },
-        components: {},
-        handleSubmit() {
-            /**
-             * TODO(@partyka): get identity contract address from ENS
-             * TODO(@pawel): generate private key
-             */
-             let web3 = new Web3(window.web3.currentProvider);
-             let newAccount = web3.eth.accounts.create();
-             web3.eth.accounts.wallet.add(newAccount.privateKey);
-             this.$store.commit('setAccountKey', newAccount.privateKey);
-             /*
-             * TODO: show qr code which will add our new key to identity contract
-             * TODO: perform challengemsg test from common.js
-             */
+        components: {QrModal},
+        methods: {
+            ...mapMutations(['setIdentity']),
+
+            async handleSubmit() {
+                if (!this.username || !this.username.length) {
+                    const c = 'tada';
+                    this.$refs.shake.classList.remove('animated');
+                    this.$refs.shake.classList.remove(c);
+                    this.$refs.shake.offsetHeight;
+                    this.$refs.shake.classList.add('animated');
+                    this.$refs.shake.classList.add(c);
+                    this.$refs.shake.offsetHeight;
+                    return;
+                }
+                const identityRepository = new IdentityRepository();
+                const identityAddress = await
+                    new ENS().getIdentityAddressByUsername(this.username + this.domain);
+                const wallet = identityRepository.generateNewWallet();
+                this.qrIdentity = new Identity(this.username, identityAddress, wallet.privateKey, wallet.address);
+                if (this.$refs.qrModal) {
+                    this.$refs.qrModal.show();
+                }
+            },
+            handlePublicKeyAdded() {
+                const identityRepository = new IdentityRepository();
+                //successful login
+                identityRepository.setActiveIdentity(this.qrIdentity.username, this.qrIdentity.identityAddress, this.qrIdentity.privateKey);
+                //TODO: move this to identity repository
+                this.setIdentity(this.qrIdentity);
+                // console.log("success");
+                this.qrIdentity = null;
+            },
+            handleCancel() {
+                alert('Fail adding new key to identity');
+                this.qrIdentity = null;
+            }
         }
     }
 </script>
