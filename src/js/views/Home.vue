@@ -23,6 +23,9 @@
                     <div v-else>
                         Great! You are logged in as {{identity.username}}
                     </div>
+                    <div>
+                        <button class="btn btn-secondary" v-on:click="seen = !seen">Add key</button>
+                    </div>
                 </div>
                 <QrModal
                         :username="qrIdentity.username"
@@ -30,6 +33,9 @@
                         v-if="qrIdentity" @cancel="handleCancel"
                         ref="qrModal"
                         @ok="handlePublicKeyAdded"></QrModal>
+                <ScanQrModal
+                        v-if="allowScanQrModal"
+                        ref="scanQrModal"></ScanQrModal>
             </div>
         </div>
         <div class="col-sm">
@@ -50,6 +56,7 @@
     import IdentityRepository from "../lib/repositories/IdentityRepository";
     import ENS from "../lib/ENS";
     import QrModal from 'js/components/QrModal';
+    import ScanQrModal from 'js/components/ScanQrModal';
     import Identity from "../lib/Identity";
 
     export default {
@@ -62,13 +69,14 @@
                 username: '',
                 domain: '.eth',
                 qrIdentity: null,
-                shake: false
+                shake: false,
+                seen: false
             }
         },
         computed: {
-            ...mapState(['status', 'user', 'localKeys', 'identity'])
+            ...mapState(['status', 'user', 'localKeys', 'identity', 'allowScanQrModal'])
         },
-        components: {QrModal},
+        components: {QrModal, ScanQrModal},
         methods: {
             ...mapMutations(['setIdentity']),
 
@@ -104,7 +112,8 @@
             handleCancel() {
                 alert('Fail adding new key to identity');
                 this.qrIdentity = null;
-            }
+            },
+
         }
     }
 </script>

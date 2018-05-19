@@ -19,9 +19,9 @@ export default class Common {
                     this.$store.commit('setStatus', false);
                 });
                 web3.init();
-                const TimeConstrainedCounter = await Factory.TimeConstrainedCounter();
+                const FlipContract = await Factory.FlipContract();
                 const accounts = await Account.getAccounts();
-                window.contract = TimeConstrainedCounter;
+                window.contract = FlipContract;
                 self.setAccounts(accounts);
                 this.$store.commit('setStatus', true);
                 if (web3.usesInjectedWeb3) {

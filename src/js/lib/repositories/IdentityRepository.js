@@ -41,4 +41,10 @@ export default class IdentityRepository {
         // const a = w.eth.accounts;
         // return a.create();
     }
+
+    logout() {
+        this.ls.removeItem(IdentityRepository.IDENTITY_ADDRESS);
+        this.ls.removeItem(IdentityRepository.ENS_USERNAME);
+        this.ls.removeItem(IdentityRepository.PRIVATE_KEY);
+    }
 }

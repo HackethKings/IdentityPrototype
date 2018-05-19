@@ -11,14 +11,54 @@
 }
 
 body {
-  //background: linear-gradient(270deg, rgb(255, 0, 0), rgb(159, 0, 255)) 0% 0% / 200% 200%;
-  //animation: CustomAnimation 1s ease infinite;
+  background-color: map_get($theme-colors, 'primary');
+  background: linear-gradient(270deg, map_get($theme-colors, 'primary'), darken(map_get($theme-colors, 'secondary'), 10%)) 0% 0% / 200% 200%;
+  //animation: CustomAnimation 5s ease infinite;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  map_get($theme-colors,'primary');
-  color: map_get($theme-colors,'secondary');
+  color: map_get($theme-colors, 'secondary');
   font-family: 'Roboto', sans-serif;
+}
+
+.f-l {
+  font-weight: lighter;
+  margin: 0 10px;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-family: 'Archivo Black';
+}
+
+.navbar-item {
+  margin: 0 5px;
+  font-weight: normal;
+  text-decoration: none;
+  &:hover {
+
+    text-decoration: none;
+  }
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  svg {
+    width: 100%;
+  }
+}
+
+.cm-footer__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  img{
+    max-height: 30px;
+  }
 }
 
 @keyframes CustomAnimation {
