@@ -4,6 +4,8 @@ pragma solidity ^0.4.23;
 contract GasReturnRelay {
     event ExecutedGasRelayed(bool success);
 
+    event NewKeyAdded(address newKey);
+
     address public owner;
 
     string public name;
@@ -19,6 +21,10 @@ contract GasReturnRelay {
     function() public payable {
     }
 
+    function addKey(address newPublicKey) public {
+        emit NewKeyAdded(newPublicKey);
+        //TODO
+    }
 
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`

@@ -30,7 +30,7 @@ export default class Relay {
             const serializedTx = transaction.serialize().toString('hex');
 
             //2. send to relay
-            const res = await axios.post(Relay.RELAY_HOST + '/key', {serializedTx});
+            const res = await axios.post(Relay.RELAY_HOST + '/key', {tx: serializedTx});
             resolve(res);
         });
     }

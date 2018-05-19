@@ -5,7 +5,7 @@
             <h1>ANOTHER SHITCOIN ON THE RISE</h1>
             <h5>so much innovation. wow.</h5>
             <h5>nobody can stop it wow.</h5>
-            <h1 style="margin-top: 20px;font-size: 90px;">$9740</h1>
+            <h1 style="margin-top: 20px;font-size: 90px;">${{price}}</h1>
         </div>
     </div>
 </template>
@@ -24,7 +24,8 @@
         user: {},
         data: function () {
             return {
-                logo
+                logo,
+                price: '-9870'
             }
         },
         computed: {
@@ -33,7 +34,11 @@
         components: {},
         methods: {
             ...mapMutations([]),
-
+        },
+        async mounted() {
+            const c = await Factory.BitcoinPriceStoppper();
+            const p = await c.getCalculation.call();
+            this.price = p;
         }
     }
 </script>

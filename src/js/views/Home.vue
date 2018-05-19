@@ -121,6 +121,8 @@
                     if (this.$refs.qrModal) {
                         this.$refs.qrModal.show();
                     }
+                    //event NewKeyAdded
+
                 } else {
                     //deploy
                     // const identityAddress = await (new Relay()).deploy(username, wallet.address);
