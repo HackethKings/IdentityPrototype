@@ -23,7 +23,7 @@
                             <button type="submit" class="btn btn-secondary">Log in</button>
                         </form>
                         <div v-else style="margin-top: 50px;">
-                            <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> normal
+                            <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> Normal
                                 crypto investor. <br/><span
                                         style="text-decoration: underline;">Current state of crypto:</span> Another
                                 shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
