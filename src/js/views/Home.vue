@@ -23,8 +23,12 @@
                             <button type="submit" class="btn btn-secondary">Log in</button>
                         </form>
                         <div v-else style="margin-top: 50px;">
-                            <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> normal crypto investor. <br/><span style="text-decoration: underline;">Current state of crypto:</span> Another shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
-                            <button @click="stopBitcoin" class="btn btn-light" style="margin-top: 40px;margin-left: 110px;">Stop <span style="
+                            <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> normal
+                                crypto investor. <br/><span
+                                        style="text-decoration: underline;">Current state of crypto:</span> Another
+                                shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
+                            <button @click="stopBitcoin" class="btn btn-light"
+                                    style="margin-top: 40px;margin-left: 110px;font-size: 2em;">Stop <span style="
     text-decoration: line-through;">Bitcoin</span> Shitcoin
                             </button>
                         </div>
@@ -46,18 +50,33 @@
                 </div>
             </div>
         </div>
-        <ul class="cm-footer__list cm-footer__list--images" style="margin-top: 100px;">
+        <span style="text-transform: uppercase;opacity: .8;text-align: center;display: block;margin-top: 100px;">As seen on:</span>
+        <ul class="cm-footer__list cm-footer__list--images" style="margin-top: 20px;">
             <li style="margin-right: 50px;">
                 <a class="cm-footer__menu-link">
-                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_forbes.png?t=1526654198212"
-                         alt="Forbes" class="cm-footer__menu-image cm-footer__menu-image--forbes">
+                    <img class="featured-logo wow fadeIn" data-wow-duration="0.4s" src="https://movecloser.co/wp-content/themes/movecloser/images/logos/logo-forbes-new5.png" style="visibility: visible; animation-duration: 0.4s;">
+                </a>
+            </li>
+
+            <li>
+                <a class="cm-footer__menu-link">
+                    <img class="featured-logo wow fadeIn" data-wow-duration="0.6s"
+                         src="https://movecloser.co/wp-content/themes/movecloser/images/logos/logo-polska.png"
+                         style="visibility: visible; animation-duration: 0.6s;">
                 </a>
             </li>
             <li>
                 <a class="cm-footer__menu-link">
-                    <img src="https://www.netguru.co/hubfs/images/custom-modules/footer/logo_inc5000.png?t=1526654198212"
-                         alt="INC5000" class="cm-footer__menu-image cm-footer__menu-image--inc">
+                    <img class="featured-logo wow fadeIn" data-wow-duration="0.8s"
+                         src="https://movecloser.co/wp-content/themes/movecloser/images/sales/wyborcza.png"
+                         style="visibility: visible; animation-duration: 0.8s;">
                 </a>
+            </li>
+            <li>
+                <a class="cm-footer__menu-link">
+                    <img class="featured-logo wow fadeIn" data-wow-duration="1s"
+                         src="https://movecloser.co/wp-content/themes/movecloser/images/sales/puls-biznesu.png"
+                         style="visibility: visible; animation-duration: 1s;"></a>
             </li>
         </ul>
     </div>

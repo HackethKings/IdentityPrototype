@@ -54,7 +54,7 @@
                     if (this.price == 0) {
                         this.logo = jp2;
                         // this.title = "POLAND SAVES WORLD AGAIN";
-                        this.title = "THANK YOU POLAND";
+                        this.title = "THANK YOU POLISH";
                         this.subtitle = "i can buy legit ICOs again wow.";
                         const c = "rubberBand";
                         if (!this.hasAdded) {

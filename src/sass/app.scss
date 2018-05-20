@@ -32,6 +32,10 @@ body {
   }
 }
 
+img {
+
+}
+
 .navbar__item {
   &, span {
 
@@ -39,7 +43,7 @@ body {
   }
 }
 
-.modal-title {
+.modal-title,.qr-title {
   color: map_get($theme-colors, 'primary');
 }
 
@@ -79,8 +83,20 @@ h1 {
   justify-content: center;
   list-style-type: none;
   img {
-    max-height: 30px;
+    filter: grayscale(100%);
+    max-height: 50px;
+    margin: 0 40px;
   }
+}
+
+#qrcode {
+  width: 100% !important;
+  height: 100% !important;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 @keyframes CustomAnimation {
