@@ -36,6 +36,15 @@ img {
 
 }
 
+@media (max-width: 840px) {
+  .navbar {
+    justify-content: flex-end;
+    .va-m.h6 {
+      display: none;
+    }
+  }
+}
+
 .navbar__item {
   &, span {
 
@@ -43,7 +52,7 @@ img {
   }
 }
 
-.modal-title,.qr-title {
+.modal-title, .qr-title {
   color: map_get($theme-colors, 'primary');
 }
 

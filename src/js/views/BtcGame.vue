@@ -7,6 +7,7 @@
             <h1>{{title}}</h1>
             <h2>{{subtitle}}</h2>
             <h2>nobody can stop it wow.</h2>
+            <h2>invest now thank me later.</h2>
             <h1 style="margin-top: 20px;font-size: 90px;" v-if="price>0">${{price}}</h1>
             <h2 v-if="lastStopper">Last stopper:{{lastStopper}}</h2>
         </div>
@@ -30,7 +31,7 @@
             return {
                 hasAdded: false,
                 logo,
-                title: "ANOTHER SHITCOIN ON THE RISE",
+                title: "BIGGEST ICO TO FILL YOUR POCKET",
                 subtitle: "so much innovation. wow.",
                 price: '0',
                 lastStopper: null
@@ -54,8 +55,8 @@
                     if (this.price == 0) {
                         this.logo = jp2;
                         // this.title = "POLAND SAVES WORLD AGAIN";
-                        this.title = "THANK YOU POLISH";
-                        this.subtitle = "i can buy legit ICOs again wow.";
+                        // this.title = "THANK YOU POLISH";
+                        // this.subtitle = "i can buy legit ICOs again wow.";
                         const c = "rubberBand";
                         if (!this.hasAdded) {
 
