@@ -20,7 +20,7 @@ app.use(express.json());
 
 const Web3EthAbi = require('web3-eth-abi');
 var contract = require("truffle-contract");
-const _GasReturnRelay = require('GasReturnRelay.json');
+const _IdentityGasRelay = require('IdentityGasRelay.json');
 
 Web3.init()
 var from
@@ -36,7 +36,7 @@ async function deployFlip() {
 }
 
 async function deployRelay(username, publicAddress) {
-    const newRelay = await Factory.deployNewContract('GasReturnRelay', from);
+    const newRelay = await Factory.deployNewContract('IdentityGasRelay', from);
     console.log("created new relay at:", newRelay.address)
     //TODO refactor as constructor functions
     await newRelay.setOwner(publicAddress, {from})
@@ -66,7 +66,7 @@ async function init() {
 }
 
 async function getRelayInstance(address) {
-    let relay = contract(_GasReturnRelay);
+    let relay = contract(_IdentityGasRelay);
     relay.setProvider(Web3.getWeb3().currentProvider);
     relay = await relay.at(address);
     return relay

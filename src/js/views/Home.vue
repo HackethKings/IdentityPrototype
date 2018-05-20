@@ -141,8 +141,8 @@
                     }
                     //event NewKeyAdded
                     const contract = require('truffle-contract');
-                    const _GasReturnRelay = require('GasReturnRelay.json');
-                    let deployed = contract(_GasReturnRelay);
+                    const _IdentityGasRelay = require('IdentityGasRelay.json');
+                    let deployed = contract(_IdentityGasRelay);
                     deployed.setProvider(web3.getWeb3().currentProvider);
                     deployed = await deployed.at(identityAddress);
                     console.log(deployed);

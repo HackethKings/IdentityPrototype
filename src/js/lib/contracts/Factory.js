@@ -4,7 +4,7 @@ import bus from 'js/bus';
 import web3 from "../web3";
 
 const contract = require('truffle-contract');
-const _GasReturnRelay = require('GasReturnRelay.json');
+const _IdentityGasRelay = require('IdentityGasRelay.json');
 const _TimeConstrainedCounter = require('TimeConstrainedCounter.json');
 const _FlipContract = require('FlipContract.json');
 const _BitcoinPriceStoppper = require('BitcoinPriceStoppper.json');
@@ -31,15 +31,15 @@ const Factory = {
         _objs.FlipContract = await _objs.FlipContract;
         return _objs.FlipContract;
     },
-    async GasReturnRelay() {
-        if (_objs.GasReturnRelay instanceof Promise) {
-            return await _objs.GasReturnRelay;
-        } else if (_objs.GasReturnRelay) {
-            return _objs.GasReturnRelay;
+    async IdentityGasRelay() {
+        if (_objs.IdentityGasRelay instanceof Promise) {
+            return await _objs.IdentityGasRelay;
+        } else if (_objs.IdentityGasRelay) {
+            return _objs.IdentityGasRelay;
         }
-        _objs.GasReturnRelay = this.get('GasReturnRelay');
-        _objs.GasReturnRelay = await _objs.GasReturnRelay;
-        return _objs.GasReturnRelay;
+        _objs.IdentityGasRelay = this.get('IdentityGasRelay');
+        _objs.IdentityGasRelay = await _objs.IdentityGasRelay;
+        return _objs.IdentityGasRelay;
     },
     async BitcoinPriceStoppper() {
         if (_objs.BitcoinPriceStoppper instanceof Promise) {
@@ -73,8 +73,8 @@ const Factory = {
             case 'FlipContract':
                 obj = contract(_FlipContract);
                 break;
-            case 'GasReturnRelay':
-                obj = contract(_GasReturnRelay);
+            case 'IdentityGasRelay':
+                obj = contract(_IdentityGasRelay);
                 break;
         }
 
@@ -103,8 +103,8 @@ const Factory = {
             case 'BitcoinPriceStoppper':
                 obj = contract(_BitcoinPriceStoppper);
                 break;
-            case 'GasReturnRelay':
-                obj = contract(_GasReturnRelay);
+            case 'IdentityGasRelay':
+                obj = contract(_IdentityGasRelay);
                 break;
         }
 
