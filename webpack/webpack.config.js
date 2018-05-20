@@ -37,7 +37,7 @@ let plugins = [
     }),
     new HtmlWebpackPlugin({
         template: _path('../src/index.html'),
-        filename: 'test.html'
+        filename: 'btc.html'
     })
 ];
 module.exports = {

@@ -24,7 +24,7 @@
                         </form>
                         <div v-else style="margin-top: 50px;">
                             <i style="font-size: 1.6em;"><span style="text-decoration: underline;">You:</span> normal crypto investor. <br/><span style="text-decoration: underline;">Current state of crypto:</span> Another shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
-                            <button @click="stopBitcoin" class="btn btn-secondary">Stop <span style="
+                            <button @click="stopBitcoin" class="btn btn-light" style="margin-top: 40px;margin-left: 110px;">Stop <span style="
     text-decoration: line-through;">Bitcoin</span> Shitcoin
                             </button>
                         </div>

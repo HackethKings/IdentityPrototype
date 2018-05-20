@@ -9,7 +9,7 @@ export default [
         meta: { bodyClass: 'home' },
     },
     {
-        path: '/test.html',
+        path: '/btc.html',
         name: 'btcsucks',
         component: BtcGame,
 
