@@ -2,24 +2,35 @@ pragma solidity ^0.4.21;
 
 /**
  * @title IdentityGasRelay
- * @author Ricardo Guilherme Schmidt (Status Research & Development GmbH) 
+ * @author Ricardo Guilherme Schmidt (Status Research & Development GmbH)
  * @notice enables economic abstraction for Identity
  */
 contract IdentityGasRelay {
-    
+
     bytes4 public constant CALL_PREFIX = bytes4(keccak256("callGasRelay(address,uint256,bytes32,uint256,uint256,address)"));
     bytes4 public constant APPROVEANDCALL_PREFIX = bytes4(keccak256("approveAndCallGasRelay(address,address,uint256,bytes32,uint256,uint256)"));
     mapping (bytes32 => Key) keys;
     uint256 constant ACTION_KEY = 2;
-        
+
     struct Key {
         uint256 purpose; //e.g., MANAGEMENT_KEY = 1, ACTION_KEY = 2, etc.
         uint256 keyType; // e.g. 1 = ECDSA, 2 = RSA, etc.
         bytes32 key;
     }
-    
+
     event ExecutedGasRelayed(bytes32 signHash, bool success);
 
+    address public owner;
+
+    string public name;
+
+    function setOwner(address newOwner) public {
+        owner = newOwner;
+    }
+
+    function setName(string newName) public {
+        name = newName;
+    }
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`
      *         allows identity of being controlled without requiring ether in key balace
@@ -36,10 +47,10 @@ contract IdentityGasRelay {
         bytes _data,
         uint _gasPrice,
         uint _gasLimit,
-        address _gasToken, 
+        address _gasToken,
         bytes _messageSignatures
-    ) 
-        external 
+    )
+        external
     {
         uint startGas = gasleft();
         //verify transaction parameters
@@ -55,14 +66,14 @@ contract IdentityGasRelay {
                 _gasLimit
             )
         );
-        
+
         //verify if signatures are valid and came from correct actors;
         verifySignatures(
             ACTION_KEY,
-            signHash, 
+            signHash,
             _messageSignatures
         );
-        
+
         //executes transaction
         bool success = _to.call.value(_value)(_data);
         emit ExecutedGasRelayed(
@@ -77,21 +88,21 @@ contract IdentityGasRelay {
             if (_gasToken == address(0)) {
                 address(msg.sender).transfer(_amount);
             }
-        }        
+        }
     }
 
     /**
-     * @notice reverts if signatures are not valid for the signed hash and required key type. 
+     * @notice reverts if signatures are not valid for the signed hash and required key type.
      * @param _requiredKey key required to call, if _to from payload is the identity itself, is `MANAGEMENT_KEY`, else `ACTION_KEY`
      * @param _signHash ethereum signable callGasRelayHash message provided for the payload
      * @param _messageSignatures ethereum signed `_signHash` messages
      * @return true case valid
-     */    
+     */
     function verifySignatures(
         uint256 _requiredKey,
         bytes32 _signHash,
         bytes _messageSignatures
-    ) 
+    )
         public
         view
         returns(bool)
@@ -111,9 +122,9 @@ contract IdentityGasRelay {
         return true;
     }
 
-    function isKeyPurpose(bytes32 _key, uint256 _purpose) 
+    function isKeyPurpose(bytes32 _key, uint256 _purpose)
         public
-        view 
+        view
         returns (bool)
     {
         return keys[keccak256(_key, _purpose)].purpose == _purpose;
@@ -135,13 +146,13 @@ contract IdentityGasRelay {
         uint256 _gasPrice,
         uint256 _gasLimit
     )
-        public 
-        view 
-        returns (bytes32 _callGasRelayHash) 
+        public
+        view
+        returns (bytes32 _callGasRelayHash)
     {
         _callGasRelayHash = keccak256(
-            address(this), 
-            CALL_PREFIX, 
+            address(this),
+            CALL_PREFIX,
             _to,
             _value,
             _dataHash,
@@ -166,19 +177,19 @@ contract IdentityGasRelay {
     }
 
     /**
-     * @notice recovers address who signed the message 
+     * @notice recovers address who signed the message
      * @param _signHash operation ethereum signed message hash
      * @param _messageSignature message `_signHash` signature
      * @param _pos which signature to read
      */
     function recoverKey (
-        bytes32 _signHash, 
+        bytes32 _signHash,
         bytes _messageSignature,
         uint256 _pos
     )
         pure
         public
-        returns(bytes32) 
+        returns(bytes32)
     {
         uint8 v;
         bytes32 r;
@@ -221,6 +232,6 @@ contract IdentityGasRelay {
 
         require(v == 27 || v == 28);
     }
-  
+
 
 }
