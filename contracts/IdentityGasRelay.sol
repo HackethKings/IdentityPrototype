@@ -11,7 +11,9 @@ contract IdentityGasRelay {
     bytes4 public constant APPROVEANDCALL_PREFIX = bytes4(keccak256("approveAndCallGasRelay(address,address,uint256,bytes32,uint256,uint256)"));
     mapping (bytes32 => Key) keys;
     uint256 constant ACTION_KEY = 2;
-        
+    mapping (bytes32 => uint256) indexes;
+    mapping (uint256 => bytes32[]) keysByPurpose;
+    
     struct Key {
         uint256 purpose; //e.g., MANAGEMENT_KEY = 1, ACTION_KEY = 2, etc.
         uint256 keyType; // e.g. 1 = ECDSA, 2 = RSA, etc.
@@ -19,7 +21,21 @@ contract IdentityGasRelay {
     }
     
     event ExecutedGasRelayed(bytes32 signHash, bool success);
+    event KeyAdded(bytes32 indexed key, uint256 indexed purpose, uint256 indexed keyType);
+    event KeyRemoved(bytes32 indexed key, uint256 indexed purpose, uint256 indexed keyType);
 
+    address public owner;
+
+    string public name;
+
+    function setOwner(address newOwner) public {
+        owner = newOwner;
+    }
+
+    function setName(string newName) public {
+        name = newName;
+    }
+        
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`
      *         allows identity of being controlled without requiring ether in key balace
@@ -222,5 +238,82 @@ contract IdentityGasRelay {
         require(v == 27 || v == 28);
     }
   
+
+    function addKey(
+        bytes32 _key,
+        uint256 _purpose,
+        uint256 _type
+    )
+        public
+        returns (bool success)
+    {   
+        _addKey(_key, _purpose, _type);
+        return true;
+    }
+
+    function replaceKey(
+        bytes32 _oldKey,
+        bytes32 _newKey,
+        uint256 _newType
+    )
+        public
+        returns (bool success)
+    {
+        uint256 purpose = keys[_oldKey].purpose;
+        _addKey(_newKey, purpose, _newType);
+        _removeKey(_oldKey, purpose);
+        return true;
+    } 
+
+    function removeKey(
+        bytes32 _key,
+        uint256 _purpose
+    )
+        public
+        returns (bool success)
+    {
+        _removeKey(_key, _purpose);
+        return true;
+    }
+    
+    
+    function _addKey(
+        bytes32 _key,
+        uint256 _purpose,
+        uint256 _type
+    ) 
+        private
+    {
+        bytes32 keyHash = keccak256(_key, _purpose);
+        
+        require(keys[keyHash].purpose == 0);
+        require(
+            _purpose == ACTION_KEY
+        );
+        keys[keyHash] = Key(_purpose, _type, _key);
+        indexes[keyHash] = keysByPurpose[_purpose].push(_key) - 1;
+        emit KeyAdded(_key, _purpose, _type);
+    }
+
+    function _removeKey(
+        bytes32 _key,
+        uint256 _purpose
+    )
+        private 
+    {
+        bytes32 keyHash = keccak256(_key, _purpose);
+        Key memory myKey = keys[keyHash];
+        uint256 index = indexes[keyHash];
+        bytes32 indexReplacer = keysByPurpose[_purpose][keysByPurpose[_purpose].length - 1];
+        
+        keysByPurpose[_purpose][index] = indexReplacer;
+        indexes[keccak256(indexReplacer, _purpose)] = index;
+        keysByPurpose[_purpose].length--;
+
+        delete indexes[keyHash];
+        delete keys[keyHash];
+
+        emit KeyRemoved(myKey.key, myKey.purpose, myKey.keyType);
+    }
 
 }
