@@ -5,7 +5,7 @@
                  style="position: fixed;left: 50%;top: 10px;transform:translate(-50%,0);font-size: 1.7rem;">
 
                 <span v-html="logo" alt="" class="logo-img"></span>
-                <span style="display: inline-block;margin-left: 20px;color: #fff;">ShowMeDaWei</span>
+                <span style="display: inline-block;margin-left: 20px;color: #fff;" class="logo-text">ShowMeDaWei</span>
             </div>
             <div class="col-sm" style="display: none;">
                 <router-link v-html="'Home'" class="va-m h6 navbar-item"

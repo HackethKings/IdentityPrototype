@@ -7,8 +7,10 @@
             <h1>{{title}}</h1>
             <h2>{{subtitle}}</h2>
             <h2>nobody can stop it wow.</h2>
-            <h1 style="margin-top: 20px;font-size: 90px;" v-if="price>0">${{price}}</h1>
+            <h2>invest now thank me later.</h2>
+            <h1 style="margin-top: 20px;font-size: 90px;" v-if="price>0" ref="price">${{price}}</h1>
             <h2 v-if="lastStopper">Last stopper:{{lastStopper}}</h2>
+            <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/xK3yuxrmCac" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
         </div>
     </div>
 </template>
@@ -30,7 +32,7 @@
             return {
                 hasAdded: false,
                 logo,
-                title: "ANOTHER SHITCOIN ON THE RISE",
+                title: "BIGGEST ICO TO FILL YOUR POCKET",
                 subtitle: "so much innovation. wow.",
                 price: '0',
                 lastStopper: null
@@ -50,25 +52,35 @@
                 console.log(c);
                 setInterval(async () => {
                     const p = await c.getCalculation.call();
-                    this.price = p.toNumber().toString();
+                    const css = "rubberBand";
+                    const newPrice = p.toNumber().toString();
+                    if (newPrice < this.price) {
+                        this.$refs.price.classList.remove('animated');
+                        this.$refs.price.classList.remove('swing');
+                        this.$refs.price.offsetHeight;
+                        this.$refs.price.classList.add('animated');
+                        this.$refs.price.classList.add('swing');
+                        this.$refs.price.offsetHeight;
+                    }
+                    this.price = newPrice;
                     if (this.price == 0) {
                         this.logo = jp2;
                         // this.title = "POLAND SAVES WORLD AGAIN";
-                        this.title = "THANK YOU POLISH";
-                        this.subtitle = "i can buy legit ICOs again wow.";
-                        const c = "rubberBand";
+                        // this.title = "THANK YOU POLISH";
+                        // this.subtitle = "i can buy legit ICOs again wow.";
                         if (!this.hasAdded) {
-
                             this.$refs.logo.classList.remove('animated');
-                            this.$refs.logo.classList.remove(c);
+                            this.$refs.logo.classList.remove(css);
                             this.$refs.logo.offsetHeight;
                             this.$refs.logo.classList.add('animated');
-                            this.$refs.logo.classList.add(c);
+                            this.$refs.logo.classList.add(css);
                             this.$refs.logo.offsetHeight;
                         }
                         this.hasAdded = true;
+                    } else {
+                        this.logo = logo;
                     }
-                }, 500);
+                }, 1000);
 
                 c.PriceClicked().watch((err, response) => {
                     console.log(response);
