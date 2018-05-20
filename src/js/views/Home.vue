@@ -28,8 +28,7 @@
                                         style="text-decoration: underline;">Current state of crypto:</span> Another
                                 shitcoin is on the rise. Send transactions without MetaMask to stop it.</i><br/>
                             <button @click="stopBitcoin" class="btn btn-light"
-                                    style="margin-top: 40px;margin-left: 110px;font-size: 2em;">Stop <span style="
-    text-decoration: line-through;">Bitcoin</span> Shitcoin
+                                    style="margin-top: 40px;margin-left: 150px;font-size: 2em;">Stop Shitcoin
                             </button>
                         </div>
                     </div>
@@ -50,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <span style="text-transform: uppercase;opacity: .8;text-align: center;display: block;margin-top: 100px;">As seen on:</span>
+        <span style="text-transform: uppercase;opacity: .8;text-align: center;display: block;margin-top: 100px;" class="as-seen-on">As seen on:</span>
         <ul class="cm-footer__list cm-footer__list--images" style="margin-top: 20px;">
             <li style="margin-right: 50px;">
                 <a class="cm-footer__menu-link">

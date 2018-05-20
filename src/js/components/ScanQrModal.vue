@@ -2,7 +2,8 @@
     <div>
         <b-modal @hidden="$emit('hidden')" centered title="Scan QR Code"
                  ref="myModalRef"
-                 :ok-title="`Authorize`" cancel-title="Cancel" @ok="$emit('ok')">
+                 ok-only
+                 ok-title="Hide" @ok="$emit('ok')">
 
             <div style="position: relative;height: 0;padding-bottom: 60%;">
                 <video ref="preview"
