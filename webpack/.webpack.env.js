@@ -1,5 +1,5 @@
 module.exports = {
-    host: '10.144.3.101',
+    host: 'localhost',
     port: 9081,
     minify: false
 };

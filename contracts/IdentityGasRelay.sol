@@ -7,7 +7,7 @@ pragma solidity ^0.4.21;
  */
 contract IdentityGasRelay {
 
-    bytes4 public constant CALL_PREFIX = bytes4(keccak256("callGasRelay(address,uint256,bytes32,uint256,uint256,address)"));
+    bytes4 public constant CALL_PREFIX = bytes4(keccak256("callGasRelayed(address,uint256,bytes32,uint256,uint256,address)"));
     bytes4 public constant APPROVEANDCALL_PREFIX = bytes4(keccak256("approveAndCallGasRelay(address,address,uint256,bytes32,uint256,uint256)"));
     mapping (bytes32 => Key) keys;
     uint256 constant ACTION_KEY = 2;
@@ -30,12 +30,23 @@ contract IdentityGasRelay {
 
     function setOwner(address newOwner) public {
         owner = newOwner;
+        _constructIdentity(newOwner);
     }
 
     function setName(string newName) public {
         name = newName;
     }
-        
+
+    function Identity() public {
+        // _constructIdentity(msg.sender);
+    }    
+
+    function _constructIdentity(address _manager)
+        internal 
+    {
+        _addKey(bytes32(_manager), ACTION_KEY, 0);
+    }
+
     /**
      * @notice include ethereum signed callHash in return of gas proportional amount multiplied by `_gasPrice` of `_gasToken`
      *         allows identity of being controlled without requiring ether in key balace
@@ -52,7 +63,6 @@ contract IdentityGasRelay {
         bytes _data,
         uint _gasPrice,
         uint _gasLimit,
-        address _gasToken,
         bytes _messageSignatures
     )
         external
@@ -61,6 +71,7 @@ contract IdentityGasRelay {
         //verify transaction parameters
         //require(startGas >= _gasLimit);
         //require(_nonce == nonce);
+
         // calculates signHash
         bytes32 signHash = getSignHash(
             callGasRelayHash(
@@ -90,9 +101,7 @@ contract IdentityGasRelay {
         if (_gasPrice > 0) {
             uint256 _amount = 21000 + (startGas - gasleft());
             _amount = _amount * _gasPrice;
-            if (_gasToken == address(0)) {
-                address(msg.sender).transfer(_amount);
-            }
+            address(msg.sender).transfer(_amount);
         }
     }
 

@@ -5,6 +5,13 @@ import cors from 'cors';
 import Web3 from "js/lib/web3";
 import Account from 'js/lib/Account';
 import Factory from 'js/lib/contracts/Factory';
+import ethjswallet from 'ethereumjs-wallet';
+import ethjsutil from 'ethereumjs-util';
+import abi from 'ethereumjs-abi'
+import sha3 from 'js-sha3';
+
+const BN = ethjsutil.BN;
+
 // import {
 //     advanceBlock,
 //     advanceToBlock,
@@ -25,8 +32,8 @@ const _IdentityGasRelay = require('IdentityGasRelay.json');
 Web3.init()
 var from
 
-async function executeAndReturnGas(relay, to, value, data, gasPrice, gasLimit) {
-    let tx = await relay.callGasRelayed(to, value, data, gasPrice, gasLimit, {from});
+async function executeAndReturnGas(relay, to, value, data, gasPrice, gasLimit, signatures) {
+    let tx = await relay.callGasRelayed(to, value, data, gasPrice, gasLimit, signatures, {from});
     return tx;
 }
 
@@ -39,7 +46,8 @@ async function deployRelay(username, publicAddress) {
     const newRelay = await Factory.deployNewContract('IdentityGasRelay', from);
     console.log("created new relay at:", newRelay.address)
     //TODO refactor as constructor functions
-    await newRelay.setOwner(publicAddress, {from})
+    let newKey = await newRelay.setOwner(publicAddress, {from})
+    console.log("set a new public key:", newKey.logs[0].event)
     await newRelay.setName(username, {from})
     return newRelay;
 }
@@ -73,10 +81,23 @@ async function getRelayInstance(address) {
 }
 
 async function test() {
-    let newRelay = await deployRelay("newweguy", "0x01213");
-    console.log("created relay at:", newRelay.address)
+    let nickname = "newguy"
 
-    let newNewRelay = await getRelayInstance(newRelay.address);
+    const w = ethjswallet.generate()
+    let ownerPrivateKey = w.getPrivateKeyString();
+    let ownerPublicKey = w.getPublicKeyString();
+    let ownerAddress = w.getAddressString();
+
+    console.log("\n-----------")
+
+    console.log("address:", ownerAddress, "\nprivatekey:", ownerPrivateKey, "\npublicKey:", ownerPublicKey);
+    
+    console.log("\n-----------")
+
+    let newRelay = await deployRelay(nickname, ownerAddress);
+
+    //let newNewRelay = await getRelayInstance(newRelay.address);
+    let newNewRelay = newRelay;
 
     console.log("newnewnew relay:", newNewRelay.address)
 
@@ -85,16 +106,105 @@ async function test() {
     console.log("Name: ", name);
     console.log("Address: ", address);
 
+    // let res = await newNewRelay.removeKey("0x123", 2, {from});
+    // console.log("Remove result:", res.logs[0].event)
+
+    console.log("\n-----------")
+
     const newFlip = await deployFlip();
+    let flipAddress = newFlip.address
+    console.log("Created Flip: ", flipAddress)
 
     console.log("Flip: ", await newFlip.flipped.call({from}))
-    console.log("flipping through relay...")
+
+    console.log("\n-----------")
+
+    // console.log("flipping through relay...")
+
+    // let callPrefix = await newNewRelay.CALL_PREFIX.call({from});
+    // console.log("callPrefix from contract:", callPrefix)
+
+    let callPrefix = "0x"+sha3.keccak256('callGasRelayed(address,uint256,bytes32,uint256,uint256,address)').substr(0,8)
+    console.log('hash:', callPrefix);
 
     let data = Web3EthAbi.encodeFunctionSignature('flip()');
-    let tx = await executeAndReturnGas(newRelay, newFlip.address, 0, data, 0, 100000);
-    //console.log("tx: ", tx)
+    console.log('data:', data)
+
+    let dataHash = "0x"+sha3.keccak256(data);
+    console.log('dataHash:', dataHash);
+
+    let callPrefixBN = new BN(callPrefix, 16)
+    let addressBN = new BN(newNewRelay.address, 16)
+    let dataHashBN = new BN(dataHashBN, 16)
+    let flipAddressBN = new BN(flipAddress, 16)
+    let gasLimit = 100000;
+
+    console.log("\n-----------")
+
+    let callGasRelayHash = abi.soliditySHA3(
+        [ "address", "bytes4", "address", "uint", "bytes32", "uint", "uint" ],
+        [ addressBN, callPrefix, flipAddressBN, 0, dataHash, 0, gasLimit ]
+    ).toString('hex')
+    console.log("  our hash:", "0x"+callGasRelayHash);
+
+    let callGasRelayHashContract = await newNewRelay.callGasRelayHash(flipAddress, 0, dataHash, 0, gasLimit, {from});
+    console.log("their hash:", callGasRelayHashContract)
+
+    console.log("\n-----------")
+
+    const signPrefix = "\x19Ethereum Signed Message:\n32";
+    let ourSignHash = "0x"+abi.soliditySHA3(
+        [ "string", "bytes32" ],
+        [ signPrefix, callGasRelayHash ]
+    ).toString('hex')
+    console.log("  our signHash:", ourSignHash)
+
+    let signHashContract = await newNewRelay.getSignHash(callGasRelayHash, {from});
+    console.log("their signHash:", signHashContract)
+
+    console.log("\n-----------")
+
+    let signature = ethjsutil.ecsign(ethjsutil.toBuffer(ourSignHash), ethjsutil.toBuffer(ownerPrivateKey));
+    
+    let r = ethjsutil.bufferToHex(signature.r)
+    let s = ethjsutil.bufferToHex(signature.s)
+    let v = signature.v
+
+    console.log("r:", r, "\ns:", s, "\nv:", v)
+
+    let signPacked = "0x"+abi.solidityPack(
+        [ "bytes32", "bytes32", "uint8" ],
+        [ [...signature.r], [...signature.s], v ]
+    ).toString("hex")
+
+    console.log("\nsignPacked:", signPacked)
+
+    // let recovery = ethjsutil.ecrecover(ethjsutil.toBuffer("0x"+ourSignHash), v, signature.r, signature.s);
+    // console.log("recovered:", ethjsutil.bufferToHex(recovery))
+
+    let signatureSplit = await newNewRelay.signatureSplit(signPacked, 0, {from})
+
+    console.log("\nsignSplit v:", signatureSplit[0].toNumber())
+    console.log("signSplit r:", signatureSplit[1])
+    console.log("signSplit s:", signatureSplit[2])
+
+    console.log("\n-----------")
+
+    let recovered = await newNewRelay.recoverKey(ourSignHash, signPacked, 0, {from})
+    console.log("recovered address:", recovered);
+
+    let verify = await newNewRelay.verifySignatures(2, ourSignHash, signPacked, {from})
+    console.log("sign verified:", verify);
+
+    console.log("\n-----------")
+
+    let tx = await executeAndReturnGas(newNewRelay, flipAddress, 0, data, 0, gasLimit, signPacked)
+                // executeAndReturnGas(newRelay, newFlip.address, 0, data, 0, 100000);
+    console.log("Flip relay tx: ", tx.logs[0].event)
 
     console.log("Flip: ", await newFlip.flipped.call({from}))
+
+    console.log("\n-----------")
 
     let tx2 = await saveENS(name, newRelay.address);
     //console.log("save to ENS tx", tx2);
