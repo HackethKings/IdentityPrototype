@@ -18,7 +18,7 @@ require("babel-polyfill");
 module.exports = {
     networks: {
             development: {
-              host: "10.144.3.101",
+              host: "localhost",
               port: 7545,
               network_id: "*",
               gas: 4712388

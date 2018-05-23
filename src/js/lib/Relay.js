@@ -5,7 +5,7 @@ import Tx from "ethereumjs-tx";
 import IdentityRepository from "./repositories/IdentityRepository";
 
 export default class Relay {
-    static RELAY_HOST = 'http://10.144.3.101:3000';
+    static RELAY_HOST = 'http://localhost:3000';
 
     addNewPublicKey(identityAddress, newPublicKey) {
         return new Promise(async (resolve, reject) => {

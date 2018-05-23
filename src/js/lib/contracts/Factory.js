@@ -5,22 +5,11 @@ import web3 from "../web3";
 
 const contract = require('truffle-contract');
 const _GasReturnRelay = require('GasReturnRelay.json');
-const _TimeConstrainedCounter = require('TimeConstrainedCounter.json');
 const _FlipContract = require('FlipContract.json');
 const _BitcoinPriceStoppper = require('BitcoinPriceStoppper.json');
 const _ENS = require('ENS.json');
 let _objs = {}, _users = null;
 const Factory = {
-    async TimeConstrainedCounter() {
-        if (_objs.TimeConstrainedCounter instanceof Promise) {
-            return await _objs.TimeConstrainedCounter;
-        } else if (_objs.TimeConstrainedCounter) {
-            return _objs.TimeConstrainedCounter;
-        }
-        _objs.TimeConstrainedCounter = this.get('TimeConstrainedCounter');
-        _objs.TimeConstrainedCounter = await _objs.TimeConstrainedCounter;
-        return _objs.TimeConstrainedCounter;
-    },
     async FlipContract() {
         if (_objs.FlipContract instanceof Promise) {
             return await _objs.FlipContract;
@@ -91,9 +80,6 @@ const Factory = {
     async get(name) {
         let obj = '';
         switch (name) {
-            case 'TimeConstrainedCounter':
-                obj = contract(_TimeConstrainedCounter);
-                break;
             case 'FlipContract':
                 obj = contract(_FlipContract);
                 break;
