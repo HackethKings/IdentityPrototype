@@ -17,7 +17,6 @@
 
 <script>
     import logo from '../../Bitcoin.svg.png';
-    import jp2 from '../../janpawel.jpg';
     import Vue from 'vue';
     import Factory from "lib/contracts/Factory";
     import Account from "lib/Account";
@@ -64,10 +63,6 @@
                     }
                     this.price = newPrice;
                     if (this.price == 0) {
-                        this.logo = jp2;
-                        // this.title = "POLAND SAVES WORLD AGAIN";
-                        // this.title = "THANK YOU POLISH";
-                        // this.subtitle = "i can buy legit ICOs again wow.";
                         if (!this.hasAdded) {
                             this.$refs.logo.classList.remove('animated');
                             this.$refs.logo.classList.remove(css);
@@ -77,8 +72,6 @@
                             this.$refs.logo.offsetHeight;
                         }
                         this.hasAdded = true;
-                    } else {
-                        this.logo = logo;
                     }
                 }, 1000);
 
